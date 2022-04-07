@@ -13,13 +13,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Demo_welcome">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".PinSettingActivity"></activity>
+        <activity android:name=".Demo_welcome" />
         <activity android:name=".MainActivity2" />
         <activity android:name=".Profile" />
         <activity android:name=".Home" />
@@ -31,10 +26,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Welcome"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".MainActivity">
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".FirstPage" />
     </application>
 

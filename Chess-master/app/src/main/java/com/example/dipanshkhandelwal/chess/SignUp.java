@@ -1,5 +1,8 @@
 package com.example.dipanshkhandelwal.chess;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +21,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
+    private IOHelper ioHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,77 +43,38 @@ public class SignUp extends AppCompatActivity {
                     final EditText pw = (EditText) findViewById(R.id.editText3);
                     final EditText usname = (EditText) findViewById(R.id.editText4);
                     final EditText email = (EditText) findViewById(R.id.signup_email);
-                    System.out.println(pw.getText().toString());
-                    System.out.println(pw2.getText().toString());
+                    ioHelper=new IOHelper(getApplicationContext(),"accounts.json");
+                    String stringAccounts=ioHelper.stringFromFile();
+                    System.out.println(stringAccounts);
+                    JSONArray accountArray=new JSONArray(stringAccounts);
 
-                    if (pw.getText().toString().equals(pw2.getText().toString())){
 
-                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                    String url = "https://chesseleven.oa.r.appspot.com/register";
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-
-                            try {
-                                System.out.println(response);
-                                Log.i("VOLLEY", response);
-                                JSONObject jsonObject = new JSONObject(response);
-                                System.out.println(jsonObject.toString());
-                                if (jsonObject.get("success").equals("true")) {
-
-                                    Toast.makeText(getApplicationContext(), "Registered",
-                                            Toast.LENGTH_LONG).show();
-                                } else {
-                                    if (jsonObject.get("reason").equals("email")){
-
-                                    Toast.makeText(getApplicationContext(), "Email already used",Toast.LENGTH_LONG).show();}
-                                    if(jsonObject.get("reason").equals("username")){
-                                        Toast.makeText(getApplicationContext(), "Username already used",
-                                                Toast.LENGTH_LONG).show();
-
-                                    }
-                                }
-                                //SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-                                //editor.putInt("currentSession", respo);
-                                // preferences.edit()}
-                            } catch (Exception e) {
-                                System.out.println(e.toString());
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(), "Service unavailable, try later",
+                    boolean alreadyUsed=false;
+                    for(int i=0;i<accountArray.length();i++) {
+                        if (accountArray.getJSONObject(i).get("username").equals(usname.getText().toString())) {
+                            Toast.makeText(getApplicationContext(), "username già in uso",
                                     Toast.LENGTH_LONG).show();
-                            Log.e("VOLLEY", error.toString());
-                        }
-                    }) {
+                            alreadyUsed=true;
 
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("username", usname.getText().toString());
-                            params.put("password", pw.getText().toString());
-                            params.put("email", email.getText().toString());
-                            return params;
-                        }
+                        }}
 
-                        @Override
-                        protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                            String responseString = "";
-                            if (response != null) {
-                                responseString = String.valueOf(response.statusCode);
-                                // can get more details such as response.headers
-                            }
-                            //return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                            return super.parseNetworkResponse(response);
-                        }
-                    };
+                    if (pw2.getText().toString().equals(pw.getText().toString())&&!(alreadyUsed)){
+                        String newAccount=String.format("{\"username\":\"%s\",\"password\":\"%s\",\"pin\":\"%s\"}",usname.getText().toString(),pw.getText().toString(),"123");
+                        JSONObject newAccountObj=new JSONObject(newAccount);
+                        accountArray.put(newAccountObj);
+                        ioHelper.writeToFile(accountArray.toString());
+                        Intent intent = new Intent(getBaseContext(), PinSettingActivity.class);
+                        intent.putExtra("newUser",usname.getText().toString());
+                        intent.putExtra("newEmail",email.getText().toString());
+                        intent.putExtra("newPassword",pw.getText().toString());
+                        startActivity(intent);
 
-                    queue.add(stringRequest);
-                }
-                    else{ Toast.makeText(getApplicationContext(), "The two password do not match",
-                            Toast.LENGTH_LONG).show();}
+                        Toast.makeText(getApplicationContext(), "Nuovo Utente Registrato!",
+                                Toast.LENGTH_LONG).show();
+
+                    }
+                        else{ Toast.makeText(getApplicationContext(), "Credenziali non valide",
+                                Toast.LENGTH_LONG).show();}
 
                 }
                 catch (Exception e) {
