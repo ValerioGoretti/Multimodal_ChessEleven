@@ -9,10 +9,10 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="125dp"
-        android:layout_height="102dp"
+        android:layout_width="150dp"
+        android:layout_height="128dp"
 
-        android:background="@drawable/home_nuovogioco"
+        android:background="@drawable/home_singleplayer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,10 +21,10 @@
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="125dp"
-        android:layout_height="102dp"
+        android:layout_width="150dp"
+        android:layout_height="128dp"
         android:layout_marginTop="75dp"
-        android:background="@drawable/home_profile"
+        android:background="@drawable/profile_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,14 +32,15 @@
         app:layout_constraintVertical_bias="0"></Button>
 
     <Button
-        android:layout_width="125dp"
-        android:layout_height="102dp"
-        android:background="@drawable/home_logout"
+        android:layout_width="150dp"
+        android:layout_height="128dp"
+        android:background="@drawable/logout_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button5"
         app:layout_constraintVertical_bias="0"
+        android:id="@+id/button_logout"
 
         android:layout_marginTop="75dp"></Button>
 
