@@ -8,46 +8,89 @@
     tools:context="com.example.dipanshkhandelwal.chess.MainActivity">
     <!--android:background="@color/backgroundBoard"-->
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="170dp"
-
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/logo_game"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.095"
-        app:layout_constraintStart_toStartOf="parent"></ImageView>
 
     <ImageView
+        android:id="@+id/imlistening"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/imlistening"
         android:elevation="2dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/imlistening"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/textAssistent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayoutMessage"
         app:layout_constraintTop_toBottomOf="@+id/button6"></ImageView>
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/linearLayoutMessage"
         android:layout_width="280dp"
-        android:padding="5dp"
-        android:layout_height="130dp"
-
-        android:layout_marginBottom="25dp"
-        android:background="#fff"
+        android:layout_height="180dp"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/outgoing_speech_bubble"
         android:elevation="2dp"
-        android:text="Please, say 'Assistente' to use the vocal interface. When the assistent is listening try the following commands:\n'Muovi il pedone da c2 a c4'\n'Apri le impostazioni'\n'Dammi un suggerimento'\n'Proietta la partita'"
-        android:id="@+id/textAssistent"
-        android:textColor="#000"
+        android:orientation="vertical"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button6"
         app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent"></TextView>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textAssistent"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:text="Please, say 'Assistente' to use the vocal interface. When the assistent is listening \n try the following commands:"
+            android:textColor="#000"></TextView>
+
+        <TextView
+            android:id="@+id/Option1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/option_border"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Muovi il pedone da c2 a c4"
+            android:textColor="#000"></TextView>
+
+        <TextView
+            android:id="@+id/Option2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/option_border"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Apri le impostazioni"
+            android:textColor="#000"></TextView>
+
+        <TextView
+            android:id="@+id/Option3"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/option_border"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Dammi un suggerimento"
+            android:textColor="#000"></TextView>
+
+        <TextView
+            android:id="@+id/Option4"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/option_border"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Proietta la partita"
+            android:textColor="#000"></TextView>
+    </LinearLayout>
 
     <Button
         android:id="@+id/button6"

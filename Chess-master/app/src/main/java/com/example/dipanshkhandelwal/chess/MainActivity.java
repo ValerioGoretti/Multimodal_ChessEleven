@@ -70,6 +70,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextToSpeech tt;
     private AudioManager mAudioManager;
     private int mStreamVolume = 0;
+    private TextView op1;
+    private TextView op2;
+    private TextView op3;
+    private TextView op4;
 
 
 
@@ -113,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pawn_choices.setVisibility(View.INVISIBLE);
         settingsMenu=(LinearLayout) findViewById(R.id.settingsMenu);
         returnedText =(TextView) findViewById(R.id.textAssistent);
+        op1=(TextView) findViewById(R.id.Option1);
+        op2=(TextView) findViewById(R.id.Option2);
+        op3=(TextView) findViewById(R.id.Option3);
+        op4=(TextView) findViewById(R.id.Option4);
         resetSpeechRecognizer();
         timer=new CountDownTimer(10000, 1000) {
             @Override
@@ -127,6 +135,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(currentTask==0){
                     errorSound.start();
                     returnedText.setText("I didn't understand the first command! Please try again");
+                    op1.setVisibility(View.INVISIBLE);
+                    op2.setVisibility(View.INVISIBLE);
+                    op3.setVisibility(View.INVISIBLE);
+                    op4.setVisibility(View.INVISIBLE);
                     new CountDownTimer(3000,1000){
                         @Override
                         public void onTick(long l) {
@@ -135,6 +147,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onFinish() {
                             returnedText.setText(suggestions.getFirstMessage());
+                            op1.setVisibility(View.VISIBLE);
+                            op2.setVisibility(View.VISIBLE);
+                            op3.setVisibility(View.VISIBLE);
+                            op4.setVisibility(View.VISIBLE);
                             imlistenig.setVisibility(View.INVISIBLE);
                         }
                     }.start();
@@ -265,15 +281,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 proposedMove = m;
                                 String sentence= "Do you confirm the move:" + board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ") + " from " + m.getFrom() + " to " + m.getTo() + "?";
                                 speak(sentence);
-                                returnedText.setText("Do you confirm the move:\n" + board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ") + " from " + m.getFrom() + " to " + m.getTo() + "?\n\n'si'\n\n'no'");
+                                returnedText.setText("Do you confirm the move:\n" + board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ") + " from " + m.getFrom() + " to " + m.getTo() + "?");
+                                op1.setText("Si");
+                                op2.setText("No");
+                                op3.setVisibility(View.INVISIBLE);
+                                op4.setVisibility(View.INVISIBLE);
                                 currentTask = 1;
                                 currentStep = 2;
                             }
                         }}
 
 
-                        else if(result.equals("What kind of help do you want?\n\n'Dimmi le mosse per il pedone in c2'\n\n'Esegui la miglior mossa possibile'\n\n'indietro'")){
+                        else if(result.equals("What kind of help do you want?")){
                             returnedText.setText(result);
+                            op1.setText("Dimmi le mosse per il pedone in c2");
+                            op2.setText("Esegui la miglior mossa possibile");
+                            op3.setText("Indietro");
+                            op4.setVisibility(View.INVISIBLE);
                             found=true;
                             currentTask=2;
                             speak("What kind of help do you want?");
@@ -285,7 +309,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         else if(result.equals("What command do you want to do?")){
                             currentTask=3;
                             found=true;
-                            returnedText.setText("What command do you want to do?\n\n'Ricomincia la partita'\n'Esci dall'applicazione'\n\n'indietro'");
+                            returnedText.setText("What command do you want to do?");
+                            op1.setText("Ricomincia la partita");
+                            op2.setText("Esci dall'applicazione");
+                            op3.setText("Indietro");
+                            op4.setVisibility(View.INVISIBLE);
                             settingsMenu.setVisibility(View.VISIBLE);
                             imlistenig.setVisibility(View.VISIBLE);
                             speak(result);
@@ -295,6 +323,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             isTriggered=false;
                             returnedText.setText("I didn't understand the first command! Please try again");
+                            op1.setVisibility(View.INVISIBLE);
+                            op2.setVisibility(View.INVISIBLE);
+                            op3.setVisibility(View.INVISIBLE);
+                            op4.setVisibility(View.INVISIBLE);
                             errorSound.start();
                             new CountDownTimer(3000,1000){
                                 @Override
@@ -304,6 +336,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 @Override
                                 public void onFinish() {
                                     returnedText.setText(suggestions.getFirstMessage());
+                                    op1.setVisibility(View.VISIBLE);
+                                    op2.setVisibility(View.VISIBLE);
+                                    op3.setVisibility(View.VISIBLE);
+                                    op4.setVisibility(View.VISIBLE);
                                     imlistenig.setVisibility(View.INVISIBLE);
                                 }
                             }.start();
@@ -356,6 +392,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             imlistenig.setVisibility(View.GONE);
                             errorSound.start();
                         }
+                        //REIMPOSTA I TASTI PER LA MOSSA VOCALE
+                        op1.setText("Muovi il pedone da c2 a c4");
+                        op2.setText("Apri le impostazioni");
+                        op3.setVisibility(View.VISIBLE);
+                        op4.setVisibility(View.VISIBLE);
                     }
                 }
                 if (currentTask==2){
@@ -368,6 +409,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 clearBoardColor();
                                 Piece piece=board.getPiece(s);
                                 returnedText.setText("Here the possible moves for the "+piece.toString().replace("_"," ")+" in "+cell.toUpperCase());
+                                op1.setVisibility(View.INVISIBLE);
+                                op2.setVisibility(View.INVISIBLE);
+                                op3.setVisibility(View.INVISIBLE);
+                                op4.setVisibility(View.INVISIBLE);
                                 List<Integer> coordinate=parseMove(s);
                                 String click="R"+coordinate.get(0)+""+coordinate.get(1);
                                 View viewCella=findViewById(getResources().getIdentifier(click,"id",getBaseContext().getPackageName()));
@@ -381,6 +426,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     @Override
                                     public void onFinish() {
                                         returnedText.setText(suggestions.getFirstMessage());
+                                        //REIMPOSTA I TASTI PER LA MOSSA VOCALE
+                                        op1.setText("Muovi il pedone da c2 a c4");
+                                        op2.setText("Apri le impostazioni");
+                                        op3.setText("Dammi un suggerimento");
+                                        op1.setVisibility(View.VISIBLE);
+                                        op2.setVisibility(View.VISIBLE);
+                                        op3.setVisibility(View.VISIBLE);
+                                        op4.setVisibility(View.VISIBLE);
                                         imlistenig.setVisibility(View.INVISIBLE);
                                         currentTask=0;
                                         currentStep=0;
@@ -409,8 +462,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String coordinate_t="R"+coordinate_to.get(0) +""+coordinate_to.get(1);
                             View to=findViewById(getResources().getIdentifier(coordinate_t,"id", getBaseContext().getPackageName()));
                             onClick(to);
-                            doneSound.start();
                             returnedText.setText("Best possible move executed!");
+                            op1.setVisibility(View.INVISIBLE);
+                            op2.setVisibility(View.INVISIBLE);
+                            op3.setVisibility(View.INVISIBLE);
+                            op4.setVisibility(View.INVISIBLE);
+                            doneSound.start();
                             new CountDownTimer(3000,1000){
                                 @Override
                                 public void onTick(long l) {
@@ -419,13 +476,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 @Override
                                 public void onFinish() {
                                     returnedText.setText(suggestions.getFirstMessage());
+                                    //REIMPOSTA I TASTI PER LA MOSSA VOCALE
+                                    op1.setText("Muovi il pedone da c2 a c4");
+                                    op2.setText("Apri le impostazioni");
+                                    op3.setText("Dammi un suggerimento");
+                                    op1.setVisibility(View.VISIBLE);
+                                    op2.setVisibility(View.VISIBLE);
+                                    op3.setVisibility(View.VISIBLE);
+                                    op4.setVisibility(View.VISIBLE);
                                     imlistenig.setVisibility(View.INVISIBLE);
                                     currentTask=0;
                                     currentStep=0;
                                 }
                             }.start();
                         }
-
                     }
                 }
                 if(currentTask==3){
@@ -444,6 +508,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         returnedText.setText(suggestions.getFirstMessage());
                         imlistenig.setVisibility(View.GONE);
                         errorSound.start();
+                        //REIMPOSTA I TASTI PER LA MOSSA VOCALE
+                        op1.setText("Muovi il pedone da c2 a c4");
+                        op2.setText("Apri le impostazioni");
+                        op3.setText("Dammi un suggerimento");
+                        op4.setVisibility(View.VISIBLE);
                     }
                 }
             }

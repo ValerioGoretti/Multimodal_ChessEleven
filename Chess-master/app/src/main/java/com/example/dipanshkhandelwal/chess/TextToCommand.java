@@ -36,7 +36,7 @@ public class TextToCommand {
         System.out.println(strParts.toString());
         for(String words:strParts) {
             if (moveCommands.contains(words)) return "What move do you want to do?";
-            if (helpCommands.contains(words)) return "What kind of help do you want?\n\n'Dimmi le mosse per il pedone in c2'\n\n'Esegui la miglior mossa possibile'\n\n'indietro'";
+            if (helpCommands.contains(words)) return "What kind of help do you want?";
             if (screenCommands.contains(words)) return "screen";
             if (gameCommmands.contains(words))return "What command do you want to do?";
         }
