@@ -1,5 +1,6 @@
 package com.example.dipanshkhandelwal.chess;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
+    private IOHelper ioHelper;
 
 
     @Override
@@ -39,64 +42,33 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    final EditText usname=(EditText)findViewById(R.id.login_us) ;
-                    final EditText pw=(EditText)findViewById(R.id.login_pw) ;
-                    RequestQueue queue=Volley.newRequestQueue(getApplicationContext());
-                    String url ="https://chesseleven.oa.r.appspot.com/login";
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
 
-                            try {
-                                System.out.println(response);
-                                Log.i("VOLLEY", response);
-                                JSONObject jsonObject = new JSONObject(response);
-                                System.out.println(jsonObject.toString());
-                                if (jsonObject.get("success").equals("true")) {
+                final EditText usname=(EditText)findViewById(R.id.login_us) ;
+                final EditText pw=(EditText)findViewById(R.id.login_pw) ;
+                try {
 
-                                    Toast.makeText(getApplicationContext(), "Logged In",
-                                            Toast.LENGTH_LONG).show();
-                                }
-                                else{
+                    ioHelper=new IOHelper(getApplicationContext(),"accounts.json");
+                    String stringAccounts=ioHelper.stringFromFile();
+                    System.out.println(stringAccounts);
+                    JSONArray accountArray=new JSONArray(stringAccounts);
 
-                                    Toast.makeText(getApplicationContext(), "Wrong username or password",
-                                            Toast.LENGTH_LONG).show();
-                                }
-                                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-                                //editor.putInt("currentSession", respo);
-                                // preferences.edit()}
-                            }
-                            catch (Exception e){System.out.println(e.toString());}
-                        }
-                    },new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(), "Service unavailable, try later",
-                                    Toast.LENGTH_LONG).show();
-                            Log.e("VOLLEY", error.toString());
-                        }}) {
 
-                        @Override
-                        protected Map<String,String> getParams(){
-                            Map<String,String> params = new HashMap<String, String>();
-                            params.put("username",usname.getText().toString());
-                            params.put("password",pw.getText().toString());
-                            return params;
-                        }
-                        @Override
-                        protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                            String responseString = "";
-                            if (response != null) {
-                                responseString = String.valueOf(response.statusCode);
-                                // can get more details such as response.headers
-                            }
-                            //return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                            return super.parseNetworkResponse(response);
-                        }
-                    };
+                    boolean logged=false;
+                    for(int i=0;i<accountArray.length();i++) {
+                        JSONObject jsonAccount= accountArray.getJSONObject(i);
+                        if (jsonAccount.get("username").equals(usname.getText().toString())||jsonAccount.get("password").equals(pw.getText().toString())) {
+                            logged=true;
+                            Intent intent = new Intent(getBaseContext(), PinLoginActivity.class);
+                            intent.putExtra("User",usname.getText().toString());
+                            intent.putExtra("Password",pw.getText().toString());
+                            String pin=(String)jsonAccount.get("pin");
+                            intent.putExtra("Pin",pin);
+                            startActivity(intent);
+                            finish();
+                            break;
+                        }}
 
-                    queue.add(stringRequest);
+
 
                 }
                 catch (Exception e) {
@@ -104,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
-
             }
         });
     }

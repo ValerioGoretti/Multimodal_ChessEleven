@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PinSettingActivity"></activity>
+        <activity android:name=".PinLoginActivity"></activity>
+        <activity android:name=".PinSettingActivity" />
         <activity android:name=".Demo_welcome" />
         <activity android:name=".MainActivity2" />
         <activity android:name=".Profile" />
@@ -33,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".FirstPage" />
     </application>
 

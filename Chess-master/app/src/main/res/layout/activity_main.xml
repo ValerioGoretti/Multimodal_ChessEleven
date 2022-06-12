@@ -40,7 +40,7 @@
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:padding="0dp"
-            android:text="Please, say 'Assistente' to use the vocal interface. When the assistent is listening \n try the following commands:"
+            android:text="Dire 'Assistente' per utilizzare l'interfaccia vocale. Quando l'assistente è in ascolto prova i seguenti comandi:"
             android:textColor="#000"></TextView>
 
         <TextView
@@ -52,7 +52,7 @@
             android:background="@drawable/option_border"
             android:gravity="center"
             android:padding="2dp"
-            android:text="Muovi il pedone da c2 a c4"
+            android:text="'Muovi il pedone da c2 a c4'"
             android:textColor="#000"></TextView>
 
         <TextView
@@ -64,7 +64,7 @@
             android:background="@drawable/option_border"
             android:gravity="center"
             android:padding="2dp"
-            android:text="Apri le impostazioni"
+            android:text="'Apri le impostazioni'"
             android:textColor="#000"></TextView>
 
         <TextView
@@ -76,7 +76,7 @@
             android:background="@drawable/option_border"
             android:gravity="center"
             android:padding="2dp"
-            android:text="Dammi un suggerimento"
+            android:text="'Dammi un suggerimento'"
             android:textColor="#000"></TextView>
 
         <TextView
@@ -88,7 +88,7 @@
             android:background="@drawable/option_border"
             android:gravity="center"
             android:padding="2dp"
-            android:text="Proietta la partita"
+            android:text="'Proietta la partita'"
             android:textColor="#000"></TextView>
     </LinearLayout>
 

@@ -129,12 +129,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             @Override
             public void onFinish() {
-
+                System.out.println("TIMER 1....");
                 if(isTriggered){errorSound.start();}
                 isTriggered=false;
                 if(currentTask==0){
                     errorSound.start();
-                    returnedText.setText("I didn't understand the first command! Please try again");
+                    returnedText.setText("Non ho capito il tuo comando! Riprova.");
                     op1.setVisibility(View.INVISIBLE);
                     op2.setVisibility(View.INVISIBLE);
                     op3.setVisibility(View.INVISIBLE);
@@ -146,12 +146,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                         @Override
                         public void onFinish() {
+                            System.out.println("TIMER 2.....");
                             returnedText.setText(suggestions.getFirstMessage());
                             op1.setVisibility(View.VISIBLE);
                             op2.setVisibility(View.VISIBLE);
                             op3.setVisibility(View.VISIBLE);
                             op4.setVisibility(View.VISIBLE);
                             imlistenig.setVisibility(View.INVISIBLE);
+
+
                         }
                     }.start();
                 }
@@ -170,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tt = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                    tt.setLanguage(Locale.ENGLISH);
+                    tt.setLanguage(Locale.ITALIAN);
                     tt.setSpeechRate((float)1);
             }
         });
@@ -247,7 +250,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         timer.start();
                         listeningSound.start();
                         imlistenig.setVisibility(View.VISIBLE);
-
                     }
                 } else {
                     if (isTriggered) {
@@ -255,14 +257,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         isTriggered = false;
                         Boolean found=false;
                         if (result.equals("What move do you want to do?")){
-                            found=true;
                         String mossa = textToCommand.getMove(text.toLowerCase());
                          if (!mossa.equals("I didn't understand the move")) {
                             Move m = searchMove(mossa);
                             isTriggered=false;
-
+                            found=true;
                             if (m == null) {
-                                returnedText.setText("Uncorrect move! Try again");
+                                returnedText.setText("Mossa non eseguibile! Riprova.");
+                                op1.setVisibility(View.INVISIBLE);
+                                op2.setVisibility(View.INVISIBLE);
+                                op3.setVisibility(View.INVISIBLE);
+                                op4.setVisibility(View.INVISIBLE);
                                 errorSound.start();
                                 new CountDownTimer(3000, 1000) {
                                     @Override
@@ -270,59 +275,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     }
                                     @Override
                                     public void onFinish() {
+                                        System.out.println("TIMER 4....");
                                         returnedText.setText(suggestions.getFirstMessage());
                                         imlistenig.setVisibility(View.GONE);
+                                        op1.setVisibility(View.VISIBLE);
+                                        op2.setVisibility(View.VISIBLE);
+                                        op3.setVisibility(View.VISIBLE);
+                                        op4.setVisibility(View.VISIBLE);
 
                                     }
                                 }.start();
                             } else {
+                                currentTask = 1;
+                                currentStep = 2;
                                 System.out.println("Correct Move! " + m.toString());
                                 System.out.println("Piece moved  " + board.getPiece(m.getFrom()));
                                 proposedMove = m;
-                                String sentence= "Do you confirm the move:" + board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ") + " from " + m.getFrom() + " to " + m.getTo() + "?";
+                                String sentence= "Confermi la mossa:" + board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ") + " da " + m.getFrom() + " a " + m.getTo() + "?";
                                 speak(sentence);
-                                returnedText.setText("Do you confirm the move:\n" + board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ") + " from " + m.getFrom() + " to " + m.getTo() + "?");
-                                op1.setText("Si");
-                                op2.setText("No");
+                                returnedText.setText("Confermi la mossa:\n" + board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ") + " da " + m.getFrom() + " a " + m.getTo() + "?");
+                                op1.setText("'Si'");
+                                op2.setText("'No'");
                                 op3.setVisibility(View.INVISIBLE);
                                 op4.setVisibility(View.INVISIBLE);
-                                currentTask = 1;
-                                currentStep = 2;
+
                             }
                         }}
 
 
                         else if(result.equals("What kind of help do you want?")){
-                            returnedText.setText(result);
-                            op1.setText("Dimmi le mosse per il pedone in c2");
-                            op2.setText("Esegui la miglior mossa possibile");
-                            op3.setText("Indietro");
+                            returnedText.setText("Come posso aiutarti ?");
+                            op1.setText("'Dimmi le mosse per il pedone in c2'");
+                            op2.setText("'Esegui la miglior mossa possibile'");
+                            op3.setText("'Indietro'");
                             op4.setVisibility(View.INVISIBLE);
                             found=true;
                             currentTask=2;
-                            speak("What kind of help do you want?");
+                            speak("Come posso aiutarti ?");
                         }
                         else if(result.equals("screen")){
                             startActivity(new Intent("android.settings.CAST_SETTINGS"));
                             found=true;
+                            imlistenig.setVisibility(View.INVISIBLE);
                         }
                         else if(result.equals("What command do you want to do?")){
                             currentTask=3;
                             found=true;
-                            returnedText.setText("What command do you want to do?");
-                            op1.setText("Ricomincia la partita");
-                            op2.setText("Esci dall'applicazione");
-                            op3.setText("Indietro");
+                            returnedText.setText("Quale comando vuoi eseguire ?");
+                            op1.setText("'Ricomincia la partita'");
+                            op2.setText("'Esci dall'applicazione'");
+                            op3.setText("'Indietro'");
                             op4.setVisibility(View.INVISIBLE);
                             settingsMenu.setVisibility(View.VISIBLE);
                             imlistenig.setVisibility(View.VISIBLE);
                             speak(result);
 
                         }
-                        else if (!found){
-
+                        if (!found){
                             isTriggered=false;
-                            returnedText.setText("I didn't understand the first command! Please try again");
+                            returnedText.setText("Non ho capito il tuo comando! Riprova.");
                             op1.setVisibility(View.INVISIBLE);
                             op2.setVisibility(View.INVISIBLE);
                             op3.setVisibility(View.INVISIBLE);
@@ -335,6 +346,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                                 @Override
                                 public void onFinish() {
+                                    System.out.println("TIMER 3.......");
                                     returnedText.setText(suggestions.getFirstMessage());
                                     op1.setVisibility(View.VISIBLE);
                                     op2.setVisibility(View.VISIBLE);
@@ -349,7 +361,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
             else{
-                if(text.toLowerCase().contains("indietro")&&(currentTask!=3)){returnedText.setText(" ");currentTask=0;imlistenig.setVisibility(View.GONE);returnedText.setText(suggestions.getFirstMessage());errorSound.start();}
+                if(text.toLowerCase().contains("indietro")&&(currentTask!=3)){currentTask=0;imlistenig.setVisibility(View.GONE);returnedText.setText(suggestions.getFirstMessage());errorSound.start();op1.setText("'Muovi il pedone da c2 a c4'");
+                    op2.setText("'Apri le impostazioni'");
+                    op3.setVisibility(View.VISIBLE);
+                    op3.setText("'Dammi un suggerimento'");
+                    op4.setVisibility(View.VISIBLE);
+                    op4.setText("'Proietta la partita'");}
                 if(currentTask==10){
                        String promozione=text.toLowerCase();
                        View v=null;
@@ -362,7 +379,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                           else if(promozione.contains("alfiere")) {
                                v = findViewById(getResources().getIdentifier("pawn_bishop", "id", getBaseContext().getPackageName()));
                            }
-                       if (v==null){returnedText.setText("\n Please chose among:\n'Regina'\n'Alfiere'\n'Torre'\n'Cavallo'\n");errorSound.start();}
+                       if (v==null){returnedText.setText("\n Scegli tra:\n'Regina'\n'Alfiere'\n'Torre'\n'Cavallo'\n");errorSound.start();}
                        else{returnedText.setText(suggestions.getFirstMessage());currentTask=0;currentStep=0;pawnChoice(v);proposedMove=null;imlistenig.setVisibility(View.GONE);imlistenig.setVisibility(View.INVISIBLE);doneSound.start();}
                 }
                 if (currentTask==1){
@@ -383,6 +400,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             onClick(to);
                             proposedMove=null;
                             imlistenig.setVisibility(View.GONE);
+                            op1.setText("'Muovi il pedone da c2 a c4'");
+                            op2.setText("'Apri le impostazioni'");
+                            op3.setVisibility(View.VISIBLE);
+                            op4.setVisibility(View.VISIBLE);
                             doneSound.start();
                         }
                         if(text.toLowerCase().contains("no")){
@@ -390,13 +411,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             currentTask=0;
                             returnedText.setText(suggestions.getFirstMessage());
                             imlistenig.setVisibility(View.GONE);
+                            op1.setText("'Muovi il pedone da c2 a c4'");
+                            op2.setText("'Apri le impostazioni'");
+                            op3.setVisibility(View.VISIBLE);
+                            op4.setVisibility(View.VISIBLE);
+
                             errorSound.start();
                         }
-                        //REIMPOSTA I TASTI PER LA MOSSA VOCALE
-                        op1.setText("Muovi il pedone da c2 a c4");
-                        op2.setText("Apri le impostazioni");
-                        op3.setVisibility(View.VISIBLE);
-                        op4.setVisibility(View.VISIBLE);
+
                     }
                 }
                 if (currentTask==2){
@@ -408,7 +430,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 clearDuble();
                                 clearBoardColor();
                                 Piece piece=board.getPiece(s);
-                                returnedText.setText("Here the possible moves for the "+piece.toString().replace("_"," ")+" in "+cell.toUpperCase());
+                                returnedText.setText("Ecco le possibili mosse per \n"+piece.toString().replace("_"," ")+" in "+cell.toUpperCase());
                                 op1.setVisibility(View.INVISIBLE);
                                 op2.setVisibility(View.INVISIBLE);
                                 op3.setVisibility(View.INVISIBLE);
@@ -427,9 +449,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     public void onFinish() {
                                         returnedText.setText(suggestions.getFirstMessage());
                                         //REIMPOSTA I TASTI PER LA MOSSA VOCALE
-                                        op1.setText("Muovi il pedone da c2 a c4");
-                                        op2.setText("Apri le impostazioni");
-                                        op3.setText("Dammi un suggerimento");
+                                        op1.setText("'Muovi il pedone da c2 a c4'");
+                                        op2.setText("'Apri le impostazioni'");
+                                        op3.setText("'Dammi un suggerimento'");
                                         op1.setVisibility(View.VISIBLE);
                                         op2.setVisibility(View.VISIBLE);
                                         op3.setVisibility(View.VISIBLE);
@@ -442,7 +464,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             }
                             else{
-                                returnedText.setText("No moves for the cell "+cell.toUpperCase());
+                                returnedText.setText("Nessuna possibile mossa per la cella "+cell.toUpperCase());
                                 errorSound.start();
 
                             }
@@ -462,7 +484,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String coordinate_t="R"+coordinate_to.get(0) +""+coordinate_to.get(1);
                             View to=findViewById(getResources().getIdentifier(coordinate_t,"id", getBaseContext().getPackageName()));
                             onClick(to);
-                            returnedText.setText("Best possible move executed!");
+                            returnedText.setText("Miglior mossa eseguita !");
                             op1.setVisibility(View.INVISIBLE);
                             op2.setVisibility(View.INVISIBLE);
                             op3.setVisibility(View.INVISIBLE);
@@ -477,9 +499,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 public void onFinish() {
                                     returnedText.setText(suggestions.getFirstMessage());
                                     //REIMPOSTA I TASTI PER LA MOSSA VOCALE
-                                    op1.setText("Muovi il pedone da c2 a c4");
-                                    op2.setText("Apri le impostazioni");
-                                    op3.setText("Dammi un suggerimento");
+                                    op1.setText("'Muovi il pedone da c2 a c4'");
+                                    op2.setText("'Apri le impostazioni'");
+                                    op3.setText("'Dammi un suggerimento'");
                                     op1.setVisibility(View.VISIBLE);
                                     op2.setVisibility(View.VISIBLE);
                                     op3.setVisibility(View.VISIBLE);
@@ -502,6 +524,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(intent);
                     }
                     else if(text.toLowerCase().contains("indietro")){
+
                         settingsMenu.setVisibility(View.GONE);
                         currentTask=0;
                         currentStep=0;
@@ -509,9 +532,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         imlistenig.setVisibility(View.GONE);
                         errorSound.start();
                         //REIMPOSTA I TASTI PER LA MOSSA VOCALE
-                        op1.setText("Muovi il pedone da c2 a c4");
-                        op2.setText("Apri le impostazioni");
-                        op3.setText("Dammi un suggerimento");
+                        op1.setText("'Muovi il pedone da c2 a c4'");
+                        op2.setText("'Apri le impostazioni'");
+                        op3.setText("'Dammi un suggerimento'");
                         op4.setVisibility(View.VISIBLE);
                     }
                 }
