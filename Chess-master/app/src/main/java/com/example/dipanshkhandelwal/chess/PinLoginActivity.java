@@ -75,8 +75,7 @@ public class PinLoginActivity extends AppCompatActivity {
         ioHelper=new IOHelper(getApplicationContext(),"accounts.json");
         String user=getIntent().getStringExtra("User");
         String password=getIntent().getStringExtra("Password");
-        //pin=getIntent().getStringExtra("Pin");
-        pin="1111";
+        pin=getIntent().getStringExtra("Pin");
         Toast.makeText(getApplicationContext(), user+password+pin,
                 Toast.LENGTH_LONG).show();
 
