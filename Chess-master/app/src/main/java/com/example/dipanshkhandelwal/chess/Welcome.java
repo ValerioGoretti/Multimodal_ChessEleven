@@ -30,6 +30,7 @@ public class Welcome extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), SignUp.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

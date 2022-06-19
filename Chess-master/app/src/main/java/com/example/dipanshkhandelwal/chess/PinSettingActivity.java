@@ -3,6 +3,7 @@ package com.example.dipanshkhandelwal.chess;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,9 @@ import com.google.mediapipe.solutions.hands.Hands;
 import com.google.mediapipe.solutions.hands.HandsOptions;
 import com.google.mediapipe.solutions.hands.HandsResult;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,6 +40,7 @@ public class PinSettingActivity extends AppCompatActivity {
     private String newUser;
     private String newEmail;
     private String newPassword;
+    private String newAccount;
 
 
     private static final String TAG = "PinSettingActivity";
@@ -83,8 +88,8 @@ public class PinSettingActivity extends AppCompatActivity {
         newUser=getIntent().getStringExtra("newUser");
         newEmail=getIntent().getStringExtra("newEmail");
         newPassword=getIntent().getStringExtra("newPassword");
-        Toast.makeText(getApplicationContext(), newUser+newEmail+newPassword,
-                Toast.LENGTH_LONG).show();
+        newAccount=getIntent().getStringExtra("newAccount");
+        ioHelper=new IOHelper(getApplicationContext(),"accounts.json");
 
         setupLiveDemoUiComponents();
         builder = new AlertDialog.Builder(this);
@@ -145,6 +150,7 @@ public class PinSettingActivity extends AppCompatActivity {
 
     /** Sets up core workflow for streaming mode. */
     private void setupStreamingModePipeline() {
+
         // Initializes a new MediaPipe Hands solution instance in the streaming mode.
         hands =
                 new Hands(
@@ -193,7 +199,7 @@ public class PinSettingActivity extends AppCompatActivity {
                             }
                             gestureHolder = currentGesture;
                         } else {
-                            //TODO Scrivere nel file
+
                             StringBuilder strbul  = new StringBuilder();
                             Iterator<Integer> iter = userPsw.iterator();
                             while(iter.hasNext())
@@ -202,12 +208,19 @@ public class PinSettingActivity extends AppCompatActivity {
                             }
                             //TODO stringCode è la stringa da salvare
                             String stringCode = strbul.toString();
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    showToast(getApplicationContext(), userPsw.toString());
-                                }
-                            });
-                            stopCurrentPipeline();
+                            try{
+                            JSONObject jsonNewAccount=new JSONObject(newAccount);
+
+                            addPin(jsonNewAccount,stringCode);
+                            addAccount(jsonNewAccount);
+                            }
+                            catch (Exception e){e.printStackTrace();}
+
+
+                           // stopCurrentPipeline();
+                            goWelcome();
+                            finish();
+
                         }
                     }
                     logWristLandmark(handsResult, /*showPixelValues=*/ false);
@@ -227,8 +240,9 @@ public class PinSettingActivity extends AppCompatActivity {
         frameLayout.addView(glSurfaceView);
         // make camera layout invisible
         glSurfaceView.setVisibility(View.VISIBLE);
-        frameLayout.requestLayout();
-    }
+        frameLayout.requestLayout();}
+
+
 
     private List<ArrayList<Integer>> findPosition(HandsResult result, Integer handNo){
         List<ArrayList<Integer>> landmarkList= new ArrayList<>();
@@ -247,6 +261,7 @@ public class PinSettingActivity extends AppCompatActivity {
             }
         }
         return landmarkList;
+
     }
 
 
@@ -416,6 +431,38 @@ public class PinSettingActivity extends AppCompatActivity {
                         "MediaPipe Hand wrist world coordinates (in meters with the origin at the hand's"
                                 + " approximate geometric center): x=%f m, y=%f m, z=%f m",
                         wristWorldLandmark.getX(), wristWorldLandmark.getY(), wristWorldLandmark.getZ()));
+    }
+
+    private void addAccount(JSONObject account){
+        String stringAccounts=ioHelper.stringFromFile();
+        try {
+            JSONArray accountArray = new JSONArray(stringAccounts);
+            accountArray.put(account);
+            ioHelper.writeToFile(accountArray.toString());
+        }
+        catch (Exception e){e.printStackTrace();
+            finish();}
+    }
+    private void addPin(JSONObject account,String pin){
+        try{
+        account.put("pin",pin);}
+        catch (Exception e){
+          e.printStackTrace();
+            finish();
+
+        }
+    }
+    private void goWelcome(){
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(getApplicationContext(), "New account created !",
+                        Toast.LENGTH_LONG).show();
+            }
+
+        });
+        Intent intent = new Intent(getBaseContext(), Welcome.class);
+        this.startActivity(intent);
+
     }
 
 
