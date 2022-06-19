@@ -33,6 +33,8 @@ public class Home extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SessionManager sessionManager=new SessionManager(getApplicationContext());
+                sessionManager.logout();
                 Intent intent = new Intent(getBaseContext(), Welcome.class);
                 startActivity(intent);
             }

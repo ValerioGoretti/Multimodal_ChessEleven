@@ -41,7 +41,7 @@ public class PinSettingActivity extends AppCompatActivity {
     private String newEmail;
     private String newPassword;
     private String newAccount;
-
+    private int consecutiveFrames=10;
 
     private static final String TAG = "PinSettingActivity";
     private Hands hands;
@@ -79,6 +79,7 @@ public class PinSettingActivity extends AppCompatActivity {
     private AlertDialog choiceDialog;
     private AlertDialog.Builder builder;
     private String[] choices = {"Si", "No"};
+    private boolean inFinalCall=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,14 +174,14 @@ public class PinSettingActivity extends AppCompatActivity {
 
         hands.setResultListener(
                 handsResult -> {
-                    if (!isChoosing) {
+                    if (!isChoosing && !inFinalCall) {
                         lmList = findPosition(handsResult, 0);
                         getHandOrientation();
                         ArrayList<Integer> fingers = fingersUp();
                         if (userPsw.size() < 4) {
                             Integer currentGesture = getGestureCode(fingers, handsResult);
                             if (currentGesture == gestureHolder && currentGesture != null){
-                                if (gestureCounter == 50){
+                                if (gestureCounter == consecutiveFrames){
                                     builder.setTitle("Confermi la gesture " + gestureMap.get(gestureHolder) + "?");
                                     isChoosing = true;
                                     runOnUiThread(new Runnable() {
@@ -199,6 +200,7 @@ public class PinSettingActivity extends AppCompatActivity {
                             }
                             gestureHolder = currentGesture;
                         } else {
+                            inFinalCall=true;
 
                             StringBuilder strbul  = new StringBuilder();
                             Iterator<Integer> iter = userPsw.iterator();
@@ -218,7 +220,7 @@ public class PinSettingActivity extends AppCompatActivity {
 
 
                            // stopCurrentPipeline();
-                            goWelcome();
+                            goMessage();
                             finish();
 
                         }
@@ -452,15 +454,9 @@ public class PinSettingActivity extends AppCompatActivity {
 
         }
     }
-    private void goWelcome(){
-        runOnUiThread(new Runnable() {
-            public void run() {
-                Toast.makeText(getApplicationContext(), "New account created !",
-                        Toast.LENGTH_LONG).show();
-            }
+    private void goMessage(){
 
-        });
-        Intent intent = new Intent(getBaseContext(), Welcome.class);
+        Intent intent = new Intent(getBaseContext(), SignUpConfirmation.class);
         this.startActivity(intent);
 
     }

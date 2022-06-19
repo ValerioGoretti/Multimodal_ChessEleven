@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,12 +31,12 @@ import java.util.Map;
 public class PinLoginActivity extends AppCompatActivity {
     IOHelper ioHelper;
     private String pin;
-
+    private int consecutiveFrames=10;
     private static final String TAG = "PinLoginActivity";
     private Hands hands;
     // Run the pipeline and the model inference on GPU or CPU.
     private static final boolean RUN_ON_GPU = true;
-
+    private boolean inFinalCall=false;
     // Live camera demo UI and camera components.
     private CameraInput cameraInput;
 
@@ -67,14 +68,17 @@ public class PinLoginActivity extends AppCompatActivity {
     private AlertDialog choiceDialog;
     private AlertDialog.Builder builder;
     private String[] choices = {"Si", "No"};
+    private String user;
+    private String password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_setting);
         ioHelper=new IOHelper(getApplicationContext(),"accounts.json");
-        String user=getIntent().getStringExtra("User");
-        String password=getIntent().getStringExtra("Password");
+        user=getIntent().getStringExtra("User");
+        password=getIntent().getStringExtra("Password");
         pin=getIntent().getStringExtra("Pin");
         Toast.makeText(getApplicationContext(), user+password+pin,
                 Toast.LENGTH_LONG).show();
@@ -160,7 +164,7 @@ public class PinLoginActivity extends AppCompatActivity {
 
         hands.setResultListener(
                 handsResult -> {
-                    if (!isChoosing) {
+                    if (!isChoosing && !inFinalCall) {
                         lmList = findPosition(handsResult, 0);
                         getHandOrientation();
                         ArrayList<Integer> fingers = fingersUp();
@@ -168,7 +172,7 @@ public class PinLoginActivity extends AppCompatActivity {
                         if (userPsw.size() < 4) {
                             Integer currentGesture = getGestureCode(fingers, handsResult);
                             if (currentGesture == gestureHolder && currentGesture != null){
-                                if (gestureCounter == 50){
+                                if (gestureCounter == consecutiveFrames){
                                     builder.setTitle("Confermi la gesture " + gestureMap.get(gestureHolder) + "?");
                                     isChoosing = true;
                                     runOnUiThread(new Runnable() {
@@ -187,7 +191,7 @@ public class PinLoginActivity extends AppCompatActivity {
                             }
                             gestureHolder = currentGesture;
                         } else {
-
+                            inFinalCall=true;
                             StringBuilder strbul  = new StringBuilder();
                             Iterator<Integer> iter = userPsw.iterator();
                             while(iter.hasNext())
@@ -197,7 +201,14 @@ public class PinLoginActivity extends AppCompatActivity {
                             String stringCode = strbul.toString();
 
                             if(stringCode.equals(pin)){
-                                //TODO login effettuato
+                                Intent intent = new Intent(getBaseContext(), Home.class);
+
+
+
+                                SessionManager sessionManager=new SessionManager(this);
+                                sessionManager.login(user,password,pin);
+
+                                startActivity(intent);
                                 stopCurrentPipeline();
                             } else {
                                 // set all fields to default and retry
