@@ -23,6 +23,13 @@
         <activity android:name=".PinSettingActivity" />
         <activity android:name=".Demo_welcome" />
         <activity android:name=".MainActivity2" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Profile" />
         <activity android:name=".Home" />
         <activity android:name=".MediapipeActivity" />
@@ -35,13 +42,8 @@
         <activity
             android:name=".Welcome"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
         <activity android:name=".FirstPage" />
     </application>
 

@@ -8,6 +8,11 @@
     tools:context="com.example.dipanshkhandelwal.chess.MainActivity">
     <!--android:background="@color/backgroundBoard"-->
 
+    <FrameLayout
+        android:id="@+id/preview_display_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/imlistening"
