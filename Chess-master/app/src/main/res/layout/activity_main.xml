@@ -116,7 +116,7 @@
         app:layout_constraintHorizontal_bias="0.633"
         app:layout_constraintTop_toTopOf="@+id/imageView2"
         app:layout_constraintVertical_bias="0"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="15dp"
         android:onClick="cast"
         android:layout_marginRight="20dp"
         tools:ignore="OnClick"></Button>

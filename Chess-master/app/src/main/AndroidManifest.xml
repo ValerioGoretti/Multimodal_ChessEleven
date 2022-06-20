@@ -4,14 +4,11 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-    <!-- For loading images from gallery -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- For using the camera -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- For loading images from gallery -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- For using the camera -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" />
-    <!-- For logging solution events -->
+
+    <uses-feature android:name="android.hardware.camera" /> <!-- For logging solution events -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -21,7 +18,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PinLoginActivity"></activity>
+        <activity android:name=".SignUpConfirmation"></activity>
+        <activity android:name=".PinLoginActivity" />
         <activity android:name=".PinSettingActivity" />
         <activity android:name=".Demo_welcome" />
         <activity android:name=".MainActivity2" />

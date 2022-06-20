@@ -47,15 +47,15 @@ public class SignUp extends AppCompatActivity {
                         String newAccount=String.format("{\"username\":\"%s\",\"password\":\"%s\",\"pin\":\"%s\"}",usname.getText().toString(),pw.getText().toString(),"123");
                         JSONObject newAccountObj=new JSONObject(newAccount);
                         accountArray.put(newAccountObj);
-                        ioHelper.writeToFile(accountArray.toString());
+                       // ioHelper.writeToFile(accountArray.toString());
                         Intent intent = new Intent(getBaseContext(), PinSettingActivity.class);
                         intent.putExtra("newUser",usname.getText().toString());
                         intent.putExtra("newEmail",email.getText().toString());
                         intent.putExtra("newPassword",pw.getText().toString());
+                        intent.putExtra("newAccount",newAccount);
                         startActivity(intent);
+                        finish();
 
-                        Toast.makeText(getApplicationContext(), "Nuovo Utente Registrato!",
-                                Toast.LENGTH_LONG).show();
 
                     }
                         else{ Toast.makeText(getApplicationContext(), "Credenziali non valide",
