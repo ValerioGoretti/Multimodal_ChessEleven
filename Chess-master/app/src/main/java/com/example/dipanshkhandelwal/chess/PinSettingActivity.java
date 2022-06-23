@@ -75,6 +75,17 @@ public class PinSettingActivity extends AppCompatActivity {
         put(7, "yo");
         put(8, "okay");
     }};
+    private Map<Integer, Integer> gestureImgId = new HashMap<Integer, Integer>() {{
+        put(0, R.drawable.pugno);
+        put(1, R.drawable.uno);
+        put(2, R.drawable.due);
+        put(3, R.drawable.tre);
+        put(4, R.drawable.quattro);
+        put(5, R.drawable.cinque);
+        put(6, R.drawable.rock);
+        put(7, R.drawable.yo);
+        put(8, R.drawable.ok);
+    }};
     private Boolean isChoosing = false;
     private AlertDialog choiceDialog;
     private AlertDialog.Builder builder;
@@ -105,19 +116,19 @@ public class PinSettingActivity extends AppCompatActivity {
                     switch(imageIndex) {
                         case 0:
                             gestureImage = findViewById(R.id.img0);
-                            //gestureImage.setImageResource(R.drawable.click);
+                            gestureImage.setImageResource(gestureImgId.get(gestureHolder));
                             break;
                         case 1:
                             gestureImage = findViewById(R.id.img1);
-                            //gestureImage.setImageResource(R.drawable.click);
+                            gestureImage.setImageResource(gestureImgId.get(gestureHolder));
                             break;
                         case 2:
                             gestureImage = findViewById(R.id.img2);
-                            //gestureImage.setImageResource(R.drawable.click);
+                            gestureImage.setImageResource(gestureImgId.get(gestureHolder));
                             break;
                         case 3:
                             gestureImage = findViewById(R.id.img3);
-                            //gestureImage.setImageResource(R.drawable.click);
+                            gestureImage.setImageResource(gestureImgId.get(gestureHolder));
                             break;
                     }
                 }
