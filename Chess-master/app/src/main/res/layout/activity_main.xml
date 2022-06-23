@@ -110,7 +110,7 @@
         app:layout_constraintVertical_bias="0.354"></Button>
 
 
-    <!--<Button
+    <Button
         android:layout_width="35dp"
         android:layout_height="50dp"
         android:layout_marginTop="28dp"
@@ -140,7 +140,7 @@
         app:layout_constraintBottom_toTopOf="@+id/gridLayout2"
         app:layout_constraintEnd_toStartOf="@+id/bestmove"
         app:layout_constraintTop_toTopOf="@+id/settings"
-        app:layout_constraintVertical_bias="0"></Button>-->
+        app:layout_constraintVertical_bias="0"></Button>
 
 
 
