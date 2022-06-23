@@ -64,6 +64,17 @@ public class PinLoginActivity extends AppCompatActivity {
         put(7, "yo");
         put(8, "okay");
     }};
+    private Map<Integer, Integer> gestureImgId = new HashMap<Integer, Integer>() {{
+        put(0, R.drawable.pugno);
+        put(1, R.drawable.uno);
+        put(2, R.drawable.due);
+        put(3, R.drawable.tre);
+        put(4, R.drawable.quattro);
+        put(5, R.drawable.cinque);
+        put(6, R.drawable.rock);
+        put(7, R.drawable.yo);
+        put(8, R.drawable.ok);
+    }};
     private Boolean isChoosing = false;
     private AlertDialog choiceDialog;
     private AlertDialog.Builder builder;
@@ -91,24 +102,24 @@ public class PinLoginActivity extends AppCompatActivity {
                 isChoosing = false;
                 if (choices[which].equals("Si")){
                     userPsw.add(gestureHolder);
-                    Integer imageIndex = userPsw.indexOf(gestureHolder);
+                    Integer imageIndex = userPsw.size() - 1;
                     ImageView gestureImage;
                     switch(imageIndex) {
                         case 0:
                             gestureImage = findViewById(R.id.img0);
-                            //gestureImage.setImageResource(R.drawable.click);
+                            gestureImage.setImageResource(gestureImgId.get(gestureHolder));
                             break;
                         case 1:
                             gestureImage = findViewById(R.id.img1);
-                            //gestureImage.setImageResource(R.drawable.click);
+                            gestureImage.setImageResource(gestureImgId.get(gestureHolder));
                             break;
                         case 2:
                             gestureImage = findViewById(R.id.img2);
-                            //gestureImage.setImageResource(R.drawable.click);
+                            gestureImage.setImageResource(gestureImgId.get(gestureHolder));
                             break;
                         case 3:
                             gestureImage = findViewById(R.id.img3);
-                            //gestureImage.setImageResource(R.drawable.click);
+                            gestureImage.setImageResource(gestureImgId.get(gestureHolder));
                             break;
                     }
                 }
@@ -178,6 +189,7 @@ public class PinLoginActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         public void run() {
                                             choiceDialog = builder.create();
+                                            choiceDialog.setCanceledOnTouchOutside(false);
                                             choiceDialog.show();
                                         }
                                     });
@@ -203,8 +215,6 @@ public class PinLoginActivity extends AppCompatActivity {
                             if(stringCode.equals(pin)){
                                 Intent intent = new Intent(getBaseContext(), Home.class);
 
-
-
                                 SessionManager sessionManager=new SessionManager(this);
                                 sessionManager.login(user,password,pin);
 
@@ -216,6 +226,17 @@ public class PinLoginActivity extends AppCompatActivity {
                                 gestureCounter = 0;
                                 gestureHolder = null;
                                 userPsw.clear();
+                                inFinalCall = false;
+                                // Clear al images
+                                ImageView gestureImage;
+                                gestureImage = findViewById(R.id.img0);
+                                gestureImage.setImageResource(0);
+                                gestureImage = findViewById(R.id.img1);
+                                gestureImage.setImageResource(0);
+                                gestureImage = findViewById(R.id.img2);
+                                gestureImage.setImageResource(0);
+                                gestureImage = findViewById(R.id.img3);
+                                gestureImage.setImageResource(0);
                             }
                         }
                     }

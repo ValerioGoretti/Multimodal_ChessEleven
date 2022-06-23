@@ -111,7 +111,7 @@ public class PinSettingActivity extends AppCompatActivity {
                 isChoosing = false;
                 if (choices[which].equals("Si")){
                     userPsw.add(gestureHolder);
-                    Integer imageIndex = userPsw.indexOf(gestureHolder);
+                    Integer imageIndex = userPsw.size() - 1;
                     ImageView gestureImage;
                     switch(imageIndex) {
                         case 0:
@@ -198,6 +198,7 @@ public class PinSettingActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         public void run() {
                                             choiceDialog = builder.create();
+                                            choiceDialog.setCanceledOnTouchOutside(false);
                                             choiceDialog.show();
                                         }
                                     });
