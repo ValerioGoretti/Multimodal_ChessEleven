@@ -264,7 +264,7 @@ public class PinSettingActivity extends AppCompatActivity {
             LandmarkProto.NormalizedLandmarkList myHand = result.multiHandLandmarks().get(handNo);
 
             int width = glSurfaceView.getWidth();
-            int height = glSurfaceView.getWidth();
+            int height = glSurfaceView.getHeight();
 
             for (int i = 0; i < myHand.getLandmarkList().size(); i++) {
 
