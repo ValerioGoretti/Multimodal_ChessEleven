@@ -1693,21 +1693,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     getHandOrientation();
                     ArrayList<Integer> fingers = fingersUp();
                     Integer currentGesture = getGestureCode(fingers, handsResult);
-                    System.out.println(gestureMap.get(currentGesture));
-
                     if (currentGesture == gestureHolder && currentGesture != null){
                         if (gestureCounter == consecutiveFrames){
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     View settingsMenu = findViewById(R.id.settingsMenu);
                                     if (settingsMenu.getVisibility() != View.VISIBLE) {
-                                        if (gestureHolder == 6) cast(findViewById(R.id.screen));
-                                        if (gestureHolder == 7) settings(findViewById(R.id.settings));
-                                        if (gestureHolder == 8) bestmove(findViewById(R.id.bestmove));
+                                        if (gestureHolder == 6) { doneSound.start(); cast(findViewById(R.id.screen));}
+                                        if (gestureHolder == 7) { doneSound.start();  settings(findViewById(R.id.settings));}
+                                        if (gestureHolder == 8) { doneSound.start();  bestmove(findViewById(R.id.bestmove));}
                                     } else {
-                                        if (gestureHolder == 1) restart(findViewById(R.id.restart));
-                                        if (gestureHolder == 2) exit(findViewById(R.id.exit));
-                                        if (gestureHolder == 3) Back(findViewById(R.id.back));
+                                        if (gestureHolder == 1) { doneSound.start(); restart(findViewById(R.id.restart));}
+                                        if (gestureHolder == 2) { doneSound.start();  exit(findViewById(R.id.exit));}
+                                        if (gestureHolder == 3) { doneSound.start();  Back(findViewById(R.id.back));}
                                     }
                                 }
                             });
