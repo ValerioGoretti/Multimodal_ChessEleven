@@ -218,23 +218,45 @@
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:id="@+id/settings_restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:translationZ="1dp">
         <TextView
             android:id="@+id/restart"
-            android:layout_width="200dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
             android:background="@drawable/button_blue_shape"
             android:elevation="6dp"
             android:onClick="restart"
             android:padding="1sp"
-            android:text="Restart"
-            android:textAlignment="center"
+            android:text="Ricomincia"
+            android:gravity="center"
+            android:textAlignment="gravity"
             android:textColor="#fff"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            />
 
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                android:src="@drawable/uno_bg"></ImageView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_esci"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:translationZ="1dp">
         <TextView
             android:id="@+id/exit"
-            android:layout_width="200dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
             android:layout_marginTop="300dp"
@@ -242,25 +264,47 @@
             android:elevation="6dp"
             android:onClick="exit"
             android:padding="1sp"
-            android:text="Exit"
+            android:text="Esci"
             android:textAlignment="center"
             android:textColor="#fff"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            />
+            <ImageView
+            android:layout_width="45dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:elevation="10dp"
+            android:src="@drawable/due_bg"></ImageView>
 
-        <TextView
-            android:id="@+id/back"
-            android:layout_width="200dp"
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_indietro"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5sp"
-            android:layout_marginTop="300dp"
-            android:background="@drawable/button_blue_shape"
-            android:elevation="6dp"
-            android:onClick="Back"
-            android:padding="1sp"
-            android:text="Back"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:textSize="40sp" />
+            android:orientation="horizontal"
+            android:translationZ="1dp">>
+            <TextView
+                android:id="@+id/back"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:layout_marginTop="300dp"
+                android:background="@drawable/button_blue_shape"
+                android:elevation="6dp"
+                android:onClick="Back"
+                android:padding="1sp"
+                android:text="Indietro"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="40sp" />
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                android:src="@drawable/tre_bg"></ImageView>
+        </LinearLayout>
     </LinearLayout>
 
     <ImageView
