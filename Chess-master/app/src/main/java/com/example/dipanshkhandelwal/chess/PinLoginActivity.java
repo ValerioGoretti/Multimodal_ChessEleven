@@ -265,8 +265,8 @@ public class PinLoginActivity extends AppCompatActivity {
         if(!result.multiHandLandmarks().isEmpty()) {
             LandmarkProto.NormalizedLandmarkList myHand = result.multiHandLandmarks().get(handNo);
 
-            int width = glSurfaceView.getWidth();
-            int height = glSurfaceView.getHeight();
+            int width = 768;
+            int height = 1024;
 
             for (int i = 0; i < myHand.getLandmarkList().size(); i++) {
 

@@ -33,6 +33,7 @@ import com.github.bhlangonijr.chesslib.Side;
 import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.move.Move;
 import com.google.mediapipe.formats.proto.LandmarkProto;
+import com.google.mediapipe.glutil.ShaderUtil;
 import com.google.mediapipe.solutioncore.CameraInput;
 import com.google.mediapipe.solutioncore.SolutionGlSurfaceView;
 import com.google.mediapipe.solutions.hands.HandLandmark;
@@ -1746,8 +1747,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(!result.multiHandLandmarks().isEmpty()) {
             LandmarkProto.NormalizedLandmarkList myHand = result.multiHandLandmarks().get(handNo);
 
-            int width = glSurfaceView.getWidth();
-            int height = glSurfaceView.getHeight();
+            int width = 768;
+            int height = 1024;
 
             for (int i = 0; i < myHand.getLandmarkList().size(); i++) {
 
