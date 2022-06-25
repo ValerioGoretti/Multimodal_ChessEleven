@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -1691,6 +1692,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     getHandOrientation();
                     ArrayList<Integer> fingers = fingersUp();
                     Integer currentGesture = getGestureCode(fingers, handsResult);
+                    System.out.println(gestureMap.get(currentGesture));
+
                     if (currentGesture == gestureHolder && currentGesture != null){
                         if (gestureCounter == consecutiveFrames){
                             runOnUiThread(new Runnable() {
@@ -1890,11 +1893,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void logWristLandmark(HandsResult result, boolean showPixelValues) {
+        View handdetected  = findViewById(R.id.handdetector);
         // If no landmarks are detected
         if (result.multiHandLandmarks().isEmpty()) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    handdetected.setVisibility(View.GONE);
+                }
+            });
             return;
         }
-
+        runOnUiThread(new Runnable() {
+            public void run() {
+                handdetected.setVisibility(View.VISIBLE);
+            }
+        });
         LandmarkProto.NormalizedLandmark wristLandmark =
                 result.multiHandLandmarks().get(0).getLandmarkList().get(HandLandmark.WRIST);
         // For Bitmaps, show the pixel values. For texture inputs, show the normalized coordinates.
