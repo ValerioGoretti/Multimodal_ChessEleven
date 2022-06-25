@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MediaPlayer listeningSound;
     private MediaPlayer doneSound;
     private MediaPlayer errorSound;
+    private MediaPlayer gestureSound;
     private TextToCommand textToCommand=new TextToCommand();
     private int currentTask=0;
     private int currentStep=0;
@@ -158,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listeningSound=MediaPlayer.create(this,R.raw.listening);
         doneSound=MediaPlayer.create(this,R.raw.done);
         errorSound=MediaPlayer.create(this,R.raw.error);
+        gestureSound=MediaPlayer.create(this, R.raw.gesture);
         game_over = (TextView) findViewById(R.id.game_over);
         pawn_choices = (LinearLayout) findViewById(R.id.pawn_chioces);
         game_over.setVisibility(View.INVISIBLE);
@@ -1699,13 +1701,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 public void run() {
                                     View settingsMenu = findViewById(R.id.settingsMenu);
                                     if (settingsMenu.getVisibility() != View.VISIBLE) {
-                                        if (gestureHolder == 6) { doneSound.start(); cast(findViewById(R.id.screen));}
-                                        if (gestureHolder == 7) { doneSound.start();  settings(findViewById(R.id.settings));}
-                                        if (gestureHolder == 8) { doneSound.start();  bestmove(findViewById(R.id.bestmove));}
+                                        if (gestureHolder == 6) { gestureSound.start(); cast(findViewById(R.id.screen));}
+                                        if (gestureHolder == 7) { gestureSound.start();  settings(findViewById(R.id.settings));}
+                                        if (gestureHolder == 8) { gestureSound.start();  bestmove(findViewById(R.id.bestmove));}
                                     } else {
-                                        if (gestureHolder == 1) { doneSound.start(); restart(findViewById(R.id.restart));}
-                                        if (gestureHolder == 2) { doneSound.start();  exit(findViewById(R.id.exit));}
-                                        if (gestureHolder == 3) { doneSound.start();  Back(findViewById(R.id.back));}
+                                        if (gestureHolder == 1) { gestureSound.start(); restart(findViewById(R.id.restart));}
+                                        if (gestureHolder == 2) { gestureSound.start();  exit(findViewById(R.id.exit));}
+                                        if (gestureHolder == 3) { gestureSound.start();  Back(findViewById(R.id.back));}
                                     }
                                 }
                             });
