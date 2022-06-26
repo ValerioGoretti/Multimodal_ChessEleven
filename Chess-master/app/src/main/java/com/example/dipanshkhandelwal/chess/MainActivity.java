@@ -351,9 +351,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 System.out.println("Correct Move! " + m.toString());
                                 System.out.println("Piece moved  " + board.getPiece(m.getFrom()));
                                 proposedMove = m;
-                                String sentence= "Confermi la mossa:" + board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ") + " da " + m.getFrom() + " a " + m.getTo() + "?";
+                                String sentence= "Confermi la mossa:\n" + italian_Piece(board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ")) + " da " + m.getFrom() + " a " + m.getTo() + "?";
                                 speak(sentence);
-                                returnedText.setText("Confermi la mossa:\n" + board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ") + " da " + m.getFrom() + " a " + m.getTo() + "?");
+                                returnedText.setText("Confermi la mossa:\n" + italian_Piece(board.getPiece(m.getFrom()).toString().toLowerCase().replace("_", " ")) + " da " + m.getFrom() + " a " + m.getTo() + "?");
                                 op1.setText("'Si'");
                                 op2.setText("'No'");
                                 op3.setVisibility(View.INVISIBLE);
@@ -381,14 +381,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         else if(result.equals("What command do you want to do?")){
                             currentTask=3;
                             found=true;
-                            returnedText.setText("Quale comando vuoi eseguire ?");
+                            returnedText.setText("Quale comando vuoi eseguire?");
                             op1.setText("'Ricomincia la partita'");
                             op2.setText("'Esci dall'applicazione'");
                             op3.setText("'Indietro'");
                             op4.setVisibility(View.INVISIBLE);
                             settingsMenu.setVisibility(View.VISIBLE);
                             imlistenig.setVisibility(View.VISIBLE);
-                            speak(result);
+                            String it_result="Quale comando vuoi eseguire?";
+                            speak(it_result);
 
                         }
                         if (!found){
@@ -1938,6 +1939,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         "MediaPipe Hand wrist world coordinates (in meters with the origin at the hand's"
                                 + " approximate geometric center): x=%f m, y=%f m, z=%f m",
                         wristWorldLandmark.getX(), wristWorldLandmark.getY(), wristWorldLandmark.getZ()));
+    }
+
+    private String italian_Piece(String s){
+        String ret="";
+        String[] parts = s.split(" ");
+        switch (parts[1]){
+            case "pawn": ret="pedone";
+                         break;
+            case "knight": ret="cavallo";
+                break;
+            case "bishop": ret="alfiere";
+                break;
+            case "queen": ret="regina";
+                break;
+            case "king": ret="re";
+                break;
+            case "rook": ret="torre";
+                break;
+        }
+        switch (parts[0]){
+            case "white": ret+=" bianco";
+                          break;
+            case "black": ret+=" nero";
+                          break;
+        }
+
+        return ret;
     }
 
 }
