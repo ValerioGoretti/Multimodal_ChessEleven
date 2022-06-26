@@ -202,6 +202,8 @@
         android:onClick="bestmove"
         tools:ignore="OnClick"></Button>
 
+
+
     <LinearLayout
         android:id="@+id/settingsMenu"
         android:layout_width="wrap_content"
@@ -224,21 +226,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:translationZ="1dp">
-        <TextView
-            android:id="@+id/restart"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5sp"
-            android:background="@drawable/button_blue_shape"
-            android:elevation="6dp"
-            android:onClick="restart"
-            android:padding="1sp"
-            android:text="Ricomincia"
-            android:gravity="center"
-            android:textAlignment="gravity"
-            android:textColor="#fff"
-            android:textSize="40sp"
-            />
+            <TextView
+                android:id="@+id/restart"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:background="@drawable/button_blue_shape"
+                android:elevation="6dp"
+                android:onClick="restart"
+                android:padding="1sp"
+                android:text="Ricomincia"
+                android:gravity="center"
+                android:textAlignment="gravity"
+                android:textColor="#fff"
+                android:textSize="40sp"
+                />
 
             <ImageView
                 android:layout_width="45dp"
@@ -254,29 +256,29 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:translationZ="1dp">
-        <TextView
-            android:id="@+id/exit"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5sp"
-            android:layout_marginTop="300dp"
-            android:background="@drawable/button_blue_shape"
-            android:elevation="6dp"
-            android:onClick="exit"
-            android:padding="1sp"
-            android:text="Esci"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:textSize="40sp"
-            />
+            <TextView
+                android:id="@+id/exit"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:layout_marginTop="300dp"
+                android:background="@drawable/button_blue_shape"
+                android:elevation="6dp"
+                android:onClick="exit"
+                android:padding="1sp"
+                android:text="Esci"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="40sp"
+                />
             <ImageView
-            android:layout_width="45dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="8dp"
-            android:elevation="10dp"
-            android:src="@drawable/due_bg"></ImageView>
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                android:src="@drawable/due_bg"></ImageView>
 
-    </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/settings_indietro"
@@ -305,8 +307,123 @@
                 android:elevation="10dp"
                 android:src="@drawable/tre_bg"></ImageView>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_indietro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:translationZ="1dp">>
+            <TextView
+                android:id="@+id/back"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:layout_marginTop="300dp"
+                android:background="@drawable/button_blue_shape"
+                android:elevation="6dp"
+                android:onClick="gesture"
+                android:padding="1sp"
+                android:text="Gesture"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="40sp" />
+        </LinearLayout>
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/gestureMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#dc181818"
+        android:orientation="vertical"
+        android:padding="45sp"
+        android:translationZ="1dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/settings_restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:translationZ="1dp">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                android:src="@drawable/rock"></ImageView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_esci"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:translationZ="1dp">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                android:src="@drawable/yo"></ImageView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_indietro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:translationZ="1dp">>
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                android:src="@drawable/ok"></ImageView>
+            <Spinner
+                android:id="@+id/ok_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/save_gesture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:translationZ="1dp"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/save"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_blue_shape"
+                android:elevation="6dp"
+                android:onClick="."
+                android:padding="1sp"
+                android:text="Salva"
+                android:gravity="center"
+                android:textAlignment="gravity"
+                android:textColor="#fff"
+                android:textSize="40sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

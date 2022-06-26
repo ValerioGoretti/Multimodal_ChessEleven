@@ -21,10 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.bhlangonijr.chesslib.Board;
@@ -51,7 +53,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, RecognitionListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, RecognitionListener, AdapterView.OnItemSelectedListener {
     public Square c1=null;
     public Square c2=null;
     public Square click = null;
@@ -89,7 +91,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView op2;
     private TextView op3;
     private TextView op4;
-
+    private Spinner ok_spinner;
+    private Spinner yo_spinner;
+    private Spinner rock_spinner;
+    private ArrayList<CustomItem> customList;
 
     private int consecutiveFrames=10;
     private Hands hands;
@@ -103,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private List<ArrayList<Integer>> lmList = new ArrayList<>();
     private List<Integer> tipIds = new ArrayList<>(Arrays.asList(4, 8, 12, 16, 20));
+
+
+
     private enum HandOrientation {
         UNKNOWN,
         FRONT,
@@ -227,6 +235,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         setupLiveDemoUiComponents();
+
+
+        customList=getCustomList();
+        ok_spinner=findViewById(R.id.ok_spinner);
+        CustomAdapter ok_adapter= new CustomAdapter(this, customList);
+        if(ok_spinner!= null){
+            ok_spinner.setAdapter(ok_adapter);
+            ok_spinner.setOnItemSelectedListener(this);
+
+        }
+    }
+
+    private ArrayList<CustomItem> getCustomList() {
+        customList=new ArrayList<>();
+        customList.add(new CustomItem("Cast", R.drawable.screencast));
+        customList.add(new CustomItem("Impostazioni", R.drawable.settings));
+        customList.add(new CustomItem("Mossa Migliore", R.drawable.best_move));
+        return customList;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        CustomItem item= (CustomItem) adapterView.getSelectedItem();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 
@@ -1644,6 +1679,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void exit(View view){
+        finish();
+    }
+
+    public void gesture(View view){
         finish();
     }
 
