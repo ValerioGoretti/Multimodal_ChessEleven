@@ -19,8 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SignUpConfirmation"></activity>
-        <activity android:name=".PinLoginActivity"/>
-        <activity android:name=".PinSettingActivity" />
+        <activity android:name=".PinLoginActivity">
+
+        </activity>
+        <activity android:name=".PinSettingActivity">
+
+        </activity>
         <activity android:name=".Demo_welcome" />
         <activity android:name=".MainActivity2" />
         <activity android:name=".MainActivity">

@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
     private String LOG_TAG = "VoiceRecognitionActivity";
+    private String TAG = "MainActivity";
     private boolean isTriggered=false;
     private CountDownTimer timer;
     private MediaPlayer listeningSound;
@@ -115,23 +116,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Hands hands;
     // Run the pipeline and the model inference on GPU or CPU.
     private static final boolean RUN_ON_GPU = true;
-    private boolean inFinalCall=false;
+
     // Live camera demo UI and camera components.
     private CameraInput cameraInput;
 
     private SolutionGlSurfaceView<HandsResult> glSurfaceView;
 
-    private List<ArrayList<Integer>> lmList = new ArrayList<>();
-    private List<Integer> tipIds = new ArrayList<>(Arrays.asList(4, 8, 12, 16, 20));
-
-
-
-    private enum HandOrientation {
-        UNKNOWN,
-        FRONT,
-        BACK
-    }
-    private HandOrientation handOrientation = HandOrientation.UNKNOWN;
     private Integer gestureCounter = 0;
     private Integer gestureHolder = null;
     private Map<Integer, String> gestureMap = new HashMap<Integer, String>() {{
@@ -145,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         put(7, "yo");
         put(8, "okay");
     }};
-    private Boolean settingsFlag = false;
+
 
 
 
@@ -1776,7 +1766,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String spinner3= ci_ok.getSpinnerItemName();
 
         if(!spinner1.equals(spinner2) && !spinner2.equals(spinner3) && !spinner3.equals(spinner1)){
-            Toast toast = Toast.makeText(getApplicationContext(), "MODIFICHE SALVATE", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), "MODIFICHE SALVATE", Toast.LENGTH_SHORT);
 
             setting_gesture.put(spinner1,6);
             setting_gesture.put(spinner2,7);
@@ -1834,11 +1824,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         hands.setResultListener(
                 handsResult -> {
+                    showHandDetection(handsResult);
+                    List<ArrayList<Integer>> lmList = GestureRecognition.findPosition(handsResult, 0);
+                    String handOrientation = GestureRecognition.getHandOrientation(lmList);
+                    ArrayList<Integer> fingers = GestureRecognition.fingersUp(lmList, handOrientation);
 
-                    lmList = findPosition(handsResult, 0);
-                    getHandOrientation();
-                    ArrayList<Integer> fingers = fingersUp();
-                    Integer currentGesture = getGestureCode(fingers, handsResult);
+                    Integer currentGesture = GestureRecognition.getGestureCode(fingers, handsResult);
+
                     if (currentGesture == gestureHolder && currentGesture != null){
                         if (gestureCounter == consecutiveFrames){
                             runOnUiThread(new Runnable() {
@@ -1868,7 +1860,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     gestureHolder = currentGesture;
 
 
-                    logWristLandmark(handsResult, /*showPixelValues=*/ false);
+                    GestureRecognition.logWristLandmark(handsResult, /*showPixelValues=*/ false, TAG);
                     glSurfaceView.setRenderData(handsResult);
                     glSurfaceView.requestRender();
                 });
@@ -1888,127 +1880,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         frameLayout.requestLayout();
     }
 
+    private void showHandDetection(HandsResult result) {
+        View handdetected  = findViewById(R.id.handdetector);
+        // If no landmarks are detected
+        if (result.multiHandLandmarks().isEmpty()) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    handdetected.setVisibility(View.GONE);
+                }
+            });
+            return;
+        }
+        runOnUiThread(new Runnable() {
+            public void run() {
+                handdetected.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     private String getFunctionName(int x){
         for (Map.Entry<String,Integer> entry : setting_gesture.entrySet())
             if(entry.getValue()==x) return entry.getKey();
         return null;
     }
 
-    private List<ArrayList<Integer>> findPosition(HandsResult result, Integer handNo){
-        List<ArrayList<Integer>> landmarkList= new ArrayList<>();
-        if(!result.multiHandLandmarks().isEmpty()) {
-            LandmarkProto.NormalizedLandmarkList myHand = result.multiHandLandmarks().get(handNo);
-
-            int width = 768;
-            int height = 1024;
-
-            for (int i = 0; i < myHand.getLandmarkList().size(); i++) {
-
-                int cx = (int) (myHand.getLandmarkList().get(i).getX() * width);
-                int cy = (int) (myHand.getLandmarkList().get(i).getY() * height);
-
-                landmarkList.add(new ArrayList<>(Arrays.asList(i, cx, cy)));
-            }
-        }
-        return landmarkList;
-    }
-
-
-    public Integer getGestureCode(ArrayList<Integer> fingers, HandsResult result){
-
-        if(result.multiHandLandmarks().isEmpty()){
-            return null;
-        }
-        if (fingers.equals(Arrays.asList(0, 0, 0, 0, 0))){
-            return 0;
-        }else{
-            if(fingers.equals(Arrays.asList(0, 1, 0, 0, 0))){
-                return 1;
-            }else{
-                if(fingers.equals(Arrays.asList(0, 1, 1, 0, 0))){
-                    return 2;
-                }else{
-                    if(fingers.equals(Arrays.asList(1, 1, 1, 0, 0))){
-                        return 3;
-                    }else{
-                        if(fingers.equals(Arrays.asList(0, 1, 1, 1, 1))){
-                            return 4;
-                        }else{
-                            if(fingers.equals(Arrays.asList(1, 1, 1, 1, 1))){
-                                return 5;
-                            }else{
-                                if(fingers.equals(Arrays.asList(1, 1, 0, 0, 1))){
-                                    return 6;
-                                }else{
-                                    if(fingers.equals(Arrays.asList(1, 0, 0, 0, 1))){
-                                        return 7;
-                                    }else{
-                                        if(fingers.equals(Arrays.asList(1, 0, 1, 1, 1))){
-                                            return 8;
-                                        } else {
-                                            return null;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void getHandOrientation() {
-        if (!lmList.isEmpty()) {
-            // Check if the x value of 5th landmark is less than the 17th landmark in order to
-            // recognize the hand orientation
-            if (lmList.get(5).get(1) < lmList.get(17).get(1)) {
-                handOrientation = HandOrientation.FRONT;
-            } else {
-                handOrientation = HandOrientation.BACK;
-            }
-        }
-        else {
-            handOrientation = HandOrientation.UNKNOWN;
-        }
-    }
-
-    private ArrayList<Integer> fingersUp(){
-        if(!lmList.isEmpty()){
-            ArrayList<Integer> fingers = new ArrayList<>();
-            if (handOrientation == HandOrientation.FRONT){
-
-                // thumb
-                if (lmList.get(tipIds.get(0)).get(1) < lmList.get(tipIds.get(0) - 1).get(1)) {
-                    fingers.add(1);
-                } else {
-                    fingers.add(0);
-                }
-
-            } else {
-
-                // thumb
-                if (lmList.get(tipIds.get(0)).get(1) > lmList.get(tipIds.get(0) - 1).get(1)) {
-                    fingers.add(1);
-                } else {
-                    fingers.add(0);
-                }
-
-            }
-            // fingers
-            for (int i = 1; i <= 4; i++) {
-                if (lmList.get(tipIds.get(i)).get(2) < lmList.get(tipIds.get(i) - 1).get(2)) {
-                    fingers.add(1);
-                } else {
-                    fingers.add(0);
-                }
-            }
-            return fingers;
-
-        } else {
-            return null;
-        }
-    }
 
     private void startCamera() {
         cameraInput.start(
@@ -2043,53 +1938,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showToast(Context ctx, String text) {
         Toast.makeText(ctx, text, Toast.LENGTH_LONG).show();
-    }
-
-    private void logWristLandmark(HandsResult result, boolean showPixelValues) {
-        View handdetected  = findViewById(R.id.handdetector);
-        // If no landmarks are detected
-        if (result.multiHandLandmarks().isEmpty()) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    handdetected.setVisibility(View.GONE);
-                }
-            });
-            return;
-        }
-        runOnUiThread(new Runnable() {
-            public void run() {
-                handdetected.setVisibility(View.VISIBLE);
-            }
-        });
-        LandmarkProto.NormalizedLandmark wristLandmark =
-                result.multiHandLandmarks().get(0).getLandmarkList().get(HandLandmark.WRIST);
-        // For Bitmaps, show the pixel values. For texture inputs, show the normalized coordinates.
-        if (showPixelValues) {
-            int width = result.inputBitmap().getWidth();
-            int height = result.inputBitmap().getHeight();
-            Log.i(
-                    LOG_TAG,
-                    String.format(
-                            "MediaPipe Hand wrist coordinates (pixel values): x=%f, y=%f",
-                            wristLandmark.getX() * width, wristLandmark.getY() * height));
-        } else {
-            Log.i(
-                    LOG_TAG,
-                    String.format(
-                            "MediaPipe Hand wrist normalized coordinates (value range: [0, 1]): x=%f, y=%f",
-                            wristLandmark.getX(), wristLandmark.getY()));
-        }
-        if (result.multiHandWorldLandmarks().isEmpty()) {
-            return;
-        }
-        LandmarkProto.Landmark wristWorldLandmark =
-                result.multiHandWorldLandmarks().get(0).getLandmarkList().get(HandLandmark.WRIST);
-        Log.i(
-                LOG_TAG,
-                String.format(
-                        "MediaPipe Hand wrist world coordinates (in meters with the origin at the hand's"
-                                + " approximate geometric center): x=%f m, y=%f m, z=%f m",
-                        wristWorldLandmark.getX(), wristWorldLandmark.getY(), wristWorldLandmark.getZ()));
     }
 
     private String italian_Piece(String s){
