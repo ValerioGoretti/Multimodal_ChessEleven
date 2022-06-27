@@ -91,10 +91,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView op2;
     private TextView op3;
     private TextView op4;
+    private LinearLayout gestureMenu;
     private Spinner ok_spinner;
     private Spinner yo_spinner;
     private Spinner rock_spinner;
-    private ArrayList<CustomItem> customList;
+    private ArrayList<CustomItem> ok_customList;
+    private ArrayList<CustomItem> yo_customList;
+    private ArrayList<CustomItem> rock_customList;
 
     private int consecutiveFrames=10;
     private Hands hands;
@@ -237,22 +240,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupLiveDemoUiComponents();
 
 
-        customList=getCustomList();
+        gestureMenu = findViewById(R.id.gestureMenu);
+
+        ok_customList=ok_getCustomList();
         ok_spinner=findViewById(R.id.ok_spinner);
-        CustomAdapter ok_adapter= new CustomAdapter(this, customList);
+        CustomAdapter ok_adapter= new CustomAdapter(this, ok_customList);
         if(ok_spinner!= null){
             ok_spinner.setAdapter(ok_adapter);
             ok_spinner.setOnItemSelectedListener(this);
 
         }
+
+        yo_customList=yo_getCustomList();
+        yo_spinner=findViewById(R.id.yo_spinner);
+        CustomAdapter yo_adapter= new CustomAdapter(this, yo_customList);
+        if(yo_spinner!= null){
+            yo_spinner.setAdapter(yo_adapter);
+            yo_spinner.setOnItemSelectedListener(this);
+
+        }
+
+        rock_customList=rock_getCustomList();
+        rock_spinner=findViewById(R.id.rock_spinner);
+        CustomAdapter rock_adapter= new CustomAdapter(this, rock_customList);
+        if(rock_spinner!= null){
+            rock_spinner.setAdapter(rock_adapter);
+            rock_spinner.setOnItemSelectedListener(this);
+
+        }
     }
 
-    private ArrayList<CustomItem> getCustomList() {
-        customList=new ArrayList<>();
-        customList.add(new CustomItem("Cast", R.drawable.screencast));
-        customList.add(new CustomItem("Impostazioni", R.drawable.settings));
-        customList.add(new CustomItem("Mossa Migliore", R.drawable.best_move));
-        return customList;
+    private ArrayList<CustomItem> ok_getCustomList() {
+        ok_customList=new ArrayList<>();
+        ok_customList.add(new CustomItem("Mossa Migliore", R.drawable.best_move));
+        ok_customList.add(new CustomItem("Cast", R.drawable.screencast));
+        ok_customList.add(new CustomItem("Impostazioni", R.drawable.settings));
+        return ok_customList;
+    }
+    private ArrayList<CustomItem> yo_getCustomList() {
+        ok_customList=new ArrayList<>();
+        ok_customList.add(new CustomItem("Impostazioni", R.drawable.settings));
+        ok_customList.add(new CustomItem("Cast", R.drawable.screencast));
+        ok_customList.add(new CustomItem("Mossa Migliore", R.drawable.best_move));
+        return ok_customList;
+    }
+    private ArrayList<CustomItem> rock_getCustomList() {
+        ok_customList=new ArrayList<>();
+        ok_customList.add(new CustomItem("Cast", R.drawable.screencast));
+        ok_customList.add(new CustomItem("Impostazioni", R.drawable.settings));
+        ok_customList.add(new CustomItem("Mossa Migliore", R.drawable.best_move));
+        return ok_customList;
     }
 
     @Override
@@ -1683,7 +1720,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void gesture(View view){
-        finish();
+        settings(view);
+        if (gestureMenu.getVisibility() != View.VISIBLE){
+            gestureMenu.setVisibility(View.VISIBLE);
+        }else {
+            gestureMenu.setVisibility(View.GONE);
+            currentTask=0;
+            currentStep=0;
+            returnedText.setText(suggestions.getFirstMessage());
+            imlistenig.setVisibility(View.GONE);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -1692,7 +1738,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void Back(View view) {
-        settingsMenu.setVisibility(View.GONE);
+        gestureMenu.setVisibility(View.GONE);
+        currentTask=0;
+        currentStep=0;
+        returnedText.setText(suggestions.getFirstMessage());
+        imlistenig.setVisibility(View.GONE);
+    }
+
+    public void chiudi(View view) {
+        gestureMenu.setVisibility(View.GONE);
+        currentTask=0;
+        currentStep=0;
+        returnedText.setText(suggestions.getFirstMessage());
+        imlistenig.setVisibility(View.GONE);
+    }
+
+    public void salva(View view) {
+        Toast toast = Toast.makeText(getApplicationContext(), "Le modifiche sono state salvate", Toast.LENGTH_SHORT);
+        toast.show();
+        gestureMenu.setVisibility(View.GONE);
         currentTask=0;
         currentStep=0;
         returnedText.setText(suggestions.getFirstMessage());

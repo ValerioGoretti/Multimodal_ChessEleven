@@ -340,7 +340,7 @@
         android:orientation="vertical"
         android:padding="45sp"
         android:translationZ="1dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -360,7 +360,15 @@
                 android:layout_height="55dp"
                 android:layout_marginTop="8dp"
                 android:elevation="10dp"
-                android:src="@drawable/rock"></ImageView>
+                android:src="@drawable/rock_bg"
+                android:layout_marginRight="10dp"></ImageView>
+
+            <Spinner
+                android:id="@+id/rock_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:background="#ffffff" />
         </LinearLayout>
 
         <LinearLayout
@@ -375,7 +383,15 @@
                 android:layout_height="55dp"
                 android:layout_marginTop="8dp"
                 android:elevation="10dp"
-                android:src="@drawable/yo"></ImageView>
+                android:src="@drawable/yo_bg"
+                android:layout_marginRight="10dp"></ImageView>
+
+            <Spinner
+                android:id="@+id/yo_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:background="#ffffff" />
 
         </LinearLayout>
 
@@ -383,8 +399,8 @@
             android:id="@+id/settings_indietro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:translationZ="1dp">>
 
             <ImageView
@@ -392,36 +408,53 @@
                 android:layout_height="55dp"
                 android:layout_marginTop="8dp"
                 android:elevation="10dp"
-                android:src="@drawable/ok"></ImageView>
+                android:src="@drawable/ok_bg"
+                android:layout_marginRight="10dp"></ImageView>
+
             <Spinner
                 android:id="@+id/ok_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"/>
+                android:layout_marginTop="7dp"
+                android:background="#ffffff" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/save_gesture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:gravity="center"
-            android:translationZ="1dp"
-            android:layout_marginTop="20dp">
+            android:translationZ="1dp">
+
             <TextView
                 android:id="@+id/save"
-                android:layout_width="220dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_blue_shape"
                 android:elevation="6dp"
-                android:onClick="."
+                android:gravity="center"
+                android:onClick="salva"
                 android:padding="1sp"
                 android:text="Salva"
-                android:gravity="center"
                 android:textAlignment="gravity"
                 android:textColor="#fff"
-                android:textSize="40sp"
-                />
+                android:textSize="25sp"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:id="@+id/save"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_blue_shape"
+                android:elevation="6dp"
+                android:gravity="center"
+                android:onClick="chiudi"
+                android:padding="1sp"
+                android:text="Chiudi"
+                android:textAlignment="gravity"
+                android:textColor="#fff"
+                android:textSize="25sp" />
         </LinearLayout>
     </LinearLayout>
     <ImageView
