@@ -99,6 +99,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<CustomItem> yo_customList;
     private ArrayList<CustomItem> rock_customList;
 
+    private Map<String, Integer> setting_gesture = new HashMap<String, Integer>() {{
+        put("Cast",6);
+        put("Impostazioni",7);
+        put("Mossa Migliore",8);
+    }};
+
+    private Map<Integer, Integer> gestureImgId = new HashMap<Integer, Integer>() {{
+        put(6, R.drawable.rock);
+        put(7, R.drawable.yo);
+        put(8, R.drawable.ok);
+    }};
+
     private int consecutiveFrames=10;
     private Hands hands;
     // Run the pipeline and the model inference on GPU or CPU.
@@ -1754,13 +1766,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void salva(View view) {
-        Toast toast = Toast.makeText(getApplicationContext(), "Le modifiche sono state salvate", Toast.LENGTH_SHORT);
-        toast.show();
-        gestureMenu.setVisibility(View.GONE);
-        currentTask=0;
-        currentStep=0;
-        returnedText.setText(suggestions.getFirstMessage());
-        imlistenig.setVisibility(View.GONE);
+        CustomItem ci_rock= (CustomItem) rock_spinner.getSelectedItem();
+        String spinner1= ci_rock.getSpinnerItemName();
+
+        CustomItem ci_yo= (CustomItem) yo_spinner.getSelectedItem();
+        String spinner2= ci_yo.getSpinnerItemName();
+
+        CustomItem ci_ok= (CustomItem) ok_spinner.getSelectedItem();
+        String spinner3= ci_ok.getSpinnerItemName();
+
+        if(!spinner1.equals(spinner2) && !spinner2.equals(spinner3) && !spinner3.equals(spinner1)){
+            Toast toast = Toast.makeText(getApplicationContext(), "MODIFICHE SALVATE", Toast.LENGTH_LONG);
+
+            setting_gesture.put(spinner1,6);
+            setting_gesture.put(spinner2,7);
+            setting_gesture.put(spinner3,8);
+
+
+            Button button_cast=findViewById(R.id.casthelp);
+            Button button_setting=findViewById(R.id.settingshelp);
+            Button button_best=findViewById(R.id.bestmovehelp);
+
+            button_cast.setBackgroundResource(gestureImgId.get(setting_gesture.get("Cast")));
+            button_setting.setBackgroundResource(gestureImgId.get(setting_gesture.get("Impostazioni")));
+            button_best.setBackgroundResource(gestureImgId.get(setting_gesture.get("Mossa Migliore")));
+
+            gestureMenu.setVisibility(View.GONE);
+            currentTask=0;
+            currentStep=0;
+            returnedText.setText(suggestions.getFirstMessage());
+            imlistenig.setVisibility(View.GONE);
+            toast.show();
+        }else{
+            Toast toast = Toast.makeText(getApplicationContext(), "SELEZIONA TUTTI ELEMENTI DIVERSI", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
 
@@ -1805,9 +1845,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 public void run() {
                                     View settingsMenu = findViewById(R.id.settingsMenu);
                                     if (settingsMenu.getVisibility() != View.VISIBLE) {
-                                        if (gestureHolder == 6) { gestureSound.start(); cast(findViewById(R.id.screen));}
-                                        if (gestureHolder == 7) { gestureSound.start();  settings(findViewById(R.id.settings));}
-                                        if (gestureHolder == 8) { gestureSound.start();  bestmove(findViewById(R.id.bestmove));}
+                                       switch (getFunctionName(gestureHolder)) {
+                                           case "Cast": gestureSound.start(); cast(findViewById(R.id.screen)); break;
+                                           case "Impostazioni": gestureSound.start();  settings(findViewById(R.id.settings)); break;
+                                           case "Mossa Migliore": gestureSound.start();  bestmove(findViewById(R.id.bestmove)); break;
+                                       }
                                     } else {
                                         if (gestureHolder == 1) { gestureSound.start(); restart(findViewById(R.id.restart));}
                                         if (gestureHolder == 2) { gestureSound.start();  exit(findViewById(R.id.exit));}
@@ -1844,6 +1886,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // make camera layout invisible
         glSurfaceView.setVisibility(View.INVISIBLE);
         frameLayout.requestLayout();
+    }
+
+    private String getFunctionName(int x){
+        for (Map.Entry<String,Integer> entry : setting_gesture.entrySet())
+            if(entry.getValue()==x) return entry.getKey();
+        return null;
     }
 
     private List<ArrayList<Integer>> findPosition(HandsResult result, Integer handNo){
