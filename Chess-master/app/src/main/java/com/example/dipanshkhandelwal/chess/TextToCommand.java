@@ -18,8 +18,6 @@ public class TextToCommand {
     HashSet<String> helpCommands;
     HashSet<String> gameCommmands;
 
-    HashSet tutorial;
-
     public TextToCommand(){
         moveCommands=new HashSet(Arrays.asList("metti","mettere","sposta","spostare","muovi","muovere","cambia","posizione","cambiare","posizioni","cambio","mossa","mosse","giocate","giocata","trasferisci","trasferire","movimento"));
         screenCommands=new HashSet(Arrays.asList("condividi","condivisione","mirror","mirroring","screencast","screen cast","schermo","proietta","proiettare","screen","share","televisione","tv","tivu","tivvu","trasmetti","trasmettere"));
