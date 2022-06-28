@@ -1740,7 +1740,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void Back(View view) {
-        gestureMenu.setVisibility(View.GONE);
+        settingsMenu.setVisibility(View.GONE);
         currentTask=0;
         currentStep=0;
         returnedText.setText(suggestions.getFirstMessage());
@@ -1841,6 +1841,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                            case "Cast": gestureSound.start(); cast(findViewById(R.id.screen)); break;
                                            case "Impostazioni": gestureSound.start();  settings(findViewById(R.id.settings)); break;
                                            case "Mossa Migliore": gestureSound.start();  bestmove(findViewById(R.id.bestmove)); break;
+                                           default: break;
                                        }
                                     } else {
                                         if (gestureHolder == 1) { gestureSound.start(); restart(findViewById(R.id.restart));}
@@ -1901,7 +1902,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String getFunctionName(int x){
         for (Map.Entry<String,Integer> entry : setting_gesture.entrySet())
             if(entry.getValue()==x) return entry.getKey();
-        return null;
+        return "null";
     }
 
 
