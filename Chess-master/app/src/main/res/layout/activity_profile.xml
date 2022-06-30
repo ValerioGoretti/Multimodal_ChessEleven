@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your Profile"
+        android:text="Il tuo profilo"
         android:textSize="40dp"
         android:layout_marginTop="250dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
-                android:text=" Nerchia di ferro 98"
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="18dp"></TextView>
 
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="81dp"
-                android:text=" Nerchia di ferro 98"
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="18dp"></TextView>
 
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="69"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="30dp"></TextView>
 
@@ -118,7 +118,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="69"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="30dp"></TextView>
 
@@ -141,7 +141,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="69"
+                    android:text=""
                     android:textColor="#000000"
 
                     android:textSize="30dp"></TextView>

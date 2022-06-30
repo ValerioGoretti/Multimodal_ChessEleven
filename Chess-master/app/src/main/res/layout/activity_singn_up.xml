@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
+        android:text="Registrazione"
         android:textColor="#0991D7"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -131,7 +131,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm Password"
+        android:text="Conferma Password"
         android:textColor="#0991D7"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -159,7 +159,7 @@
         android:layout_width="200dp"
         android:layout_height="35dp"
         android:background="@drawable/button_blue_shape"
-        android:text="Sign Up"
+        android:text="Registrati"
         android:textAllCaps="false"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -171,9 +171,9 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="140dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Already registered ?"
+        android:text="Sei già registrato?"
         android:textColor="#000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -190,17 +190,17 @@
         android:layout_height="20dp"
         android:layout_marginEnd="152dp"
         android:background="#ffff"
-        android:text="Sign Up"
+        android:text="Accedi"
         android:textAllCaps="false"
         android:textColor="#0991D7"
         app:layout_constraintBottom_toBottomOf="parent"
 
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/button3"
-        app:layout_constraintVertical_bias="0.214"></Button>
+        app:layout_constraintVertical_bias="0.203"></Button>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to ChessEleven"
+        android:text="Benvenuto in ChessEleven"
         android:textColor="#000"
         android:textAllCaps="false"
 
@@ -31,7 +31,7 @@
         android:layout_height="130dp"
         android:gravity="center"
 
-        android:text="The new account is created.\nPlease provide your credentials\n to use the application"
+        android:text="Il nuovo account è stato creato.\nFornisci le tue credenziali\n per usare l'applicazione"
         android:textColor="#fff"
         android:padding="3dp"
 
@@ -59,7 +59,7 @@
         android:layout_width="200dp"
         android:layout_height="35dp"
         android:background="@drawable/blue_button"
-        android:text="Go to the login"
+        android:text="Vai all'accesso"
         android:textColor="#fff"
         android:onClick="goToLogin"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -5,7 +5,12 @@
       <map>
         <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/drawable/style_dropdown.xml" value="0.1575" />
         <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/activity_demo_welcome.xml" value="0.18070652173913043" />
+        <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/activity_home.xml" value="0.2128205128205128" />
+        <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/activity_login.xml" value="0.75" />
         <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/activity_main.xml" value="0.15353260869565216" />
+        <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/activity_profile.xml" value="0.1717948717948718" />
+        <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/activity_sign_up_confirmation.xml" value="0.2128205128205128" />
+        <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/activity_singn_up.xml" value="0.25" />
         <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/activity_welcome.xml" value="0.18070652173913043" />
         <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/custom_dropdown_layout.xml" value="0.25" />
         <entry key="..\:/Users/Asus/Desktop/SEMESTRE_ATTUALE/Multimodal/Multimodal_ChessEleven/Chess-master/app/src/main/res/layout/custom_spinner_layout.xml" value="0.15625" />
@@ -70,7 +75,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
