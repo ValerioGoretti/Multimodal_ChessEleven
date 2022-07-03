@@ -13,16 +13,8 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Button profile=(Button) findViewById(R.id.button5);
         Button singlePlayer=(Button) findViewById(R.id.button4);
         Button logoutButton=(Button) findViewById(R.id.button_logout);
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), Profile.class);
-                startActivity(intent);
-            }
-        });
         singlePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
