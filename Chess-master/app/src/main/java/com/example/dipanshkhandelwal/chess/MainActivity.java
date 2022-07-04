@@ -565,7 +565,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 clearDuble();
                                 clearBoardColor();
                                 Piece piece=board.getPiece(s);
-                                returnedText.setText("Ecco le possibili mosse per \n"+piece.toString().replace("_"," ")+" in "+cell.toUpperCase());
+                                returnedText.setText("Ecco le possibili mosse per \n"+italian_Piece(piece.toString().toLowerCase().replace("_"," "))+" in "+cell.toUpperCase());
                                 op1.setVisibility(View.INVISIBLE);
                                 op2.setVisibility(View.INVISIBLE);
                                 op3.setVisibility(View.INVISIBLE);
