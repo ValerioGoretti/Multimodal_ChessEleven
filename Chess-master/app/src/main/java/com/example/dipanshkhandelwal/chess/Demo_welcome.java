@@ -18,7 +18,7 @@ public class Demo_welcome extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-                Intent intent=new Intent(Demo_welcome.this,MainActivity.class);
+                Intent intent=new Intent(Demo_welcome.this, Game.class);
                 startActivity(intent);
                 finish();
             }

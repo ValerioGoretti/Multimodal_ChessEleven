@@ -40,7 +40,7 @@ public class FirstPage extends AppCompatActivity {
         StartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(FirstPage.this , MainActivity.class);
+                Intent i = new Intent(FirstPage.this , Game.class);
                 FirstPage.this.startActivity(i);
             }
         });

@@ -34,26 +34,21 @@ import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Side;
 import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.move.Move;
-import com.google.mediapipe.formats.proto.LandmarkProto;
-import com.google.mediapipe.glutil.ShaderUtil;
 import com.google.mediapipe.solutioncore.CameraInput;
 import com.google.mediapipe.solutioncore.SolutionGlSurfaceView;
-import com.google.mediapipe.solutions.hands.HandLandmark;
 import com.google.mediapipe.solutions.hands.Hands;
 import com.google.mediapipe.solutions.hands.HandsOptions;
 import com.google.mediapipe.solutions.hands.HandsResult;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, RecognitionListener, AdapterView.OnItemSelectedListener {
+public class Game extends AppCompatActivity implements View.OnClickListener, RecognitionListener, AdapterView.OnItemSelectedListener {
     public Square c1=null;
     public Square c2=null;
     public Square click = null;
@@ -69,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
     private String LOG_TAG = "VoiceRecognitionActivity";
-    private String TAG = "MainActivity";
+    private String TAG = "Game";
     private boolean isTriggered=false;
     private CountDownTimer timer;
     private MediaPlayer listeningSound;
@@ -313,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 speech.startListening(recognizerIntent);
             } else {
-                Toast.makeText(MainActivity.this, "Permission Denied!", Toast
+                Toast.makeText(Game.this, "Permission Denied!", Toast
                         .LENGTH_SHORT).show();
                 finish();
             }
