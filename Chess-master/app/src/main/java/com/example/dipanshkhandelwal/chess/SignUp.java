@@ -14,12 +14,22 @@ import org.json.JSONObject;
 
 public class SignUp extends AppCompatActivity {
     private IOHelper ioHelper;
+    private Button Accedi_button_reg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singn_up);
         Button b=(Button) findViewById(R.id.button3);
+        Accedi_button_reg = (Button) findViewById(R.id.Accedi_button_reg);
+        Accedi_button_reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

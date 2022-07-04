@@ -185,6 +185,7 @@
     </TextView>
 
     <Button
+        android:id="@+id/Accedi_button_reg"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="60dp"
         android:layout_height="20dp"
