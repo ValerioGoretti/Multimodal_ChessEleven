@@ -47,6 +47,7 @@
                 android:textSize="15dp"></TextView>
 
             <TextView
+                android:id="@+id/usename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
@@ -71,6 +72,7 @@
                 android:textSize="15dp"></TextView>
 
             <TextView
+                android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="81dp"
@@ -95,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="0"
                     android:textColor="#000000"
                     android:textSize="30dp"></TextView>
 
@@ -118,7 +120,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="0"
                     android:textColor="#000000"
                     android:textSize="30dp"></TextView>
 
@@ -141,7 +143,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="0"
                     android:textColor="#000000"
 
                     android:textSize="30dp"></TextView>

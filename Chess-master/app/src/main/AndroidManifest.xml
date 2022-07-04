@@ -30,7 +30,7 @@
         </activity>
 
         <activity android:name=".Profile" />
-        <activity android:name=".Home" />
+        <activity android:name=".Home"></activity>
         <activity
             android:name=".SignUp"
             android:screenOrientation="portrait" />

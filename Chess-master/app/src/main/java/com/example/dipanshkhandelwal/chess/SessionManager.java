@@ -19,9 +19,8 @@ public class SessionManager {
             prefs.edit().putString("password", password).commit();
             prefs.edit().putString("pin", pin).commit();
             prefs.edit().putBoolean("isloggedIn",true);
-
-
         }
+
         public void logout() {
             prefs.edit().putString("username", "").commit();
             prefs.edit().putString("password", "").commit();

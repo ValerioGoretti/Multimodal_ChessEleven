@@ -206,7 +206,8 @@ public class PinLoginActivity extends AppCompatActivity {
 
                             if(stringCode.equals(pin)){
                                 Intent intent = new Intent(getBaseContext(), Home.class);
-
+                                Log.i("PinLogin", "USERNAME -->  " + user);
+                                intent.putExtra("user", user);
                                 SessionManager sessionManager=new SessionManager(this);
                                 sessionManager.login(user,password,pin);
 
